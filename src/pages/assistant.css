@@ -19,13 +19,13 @@
   min-height: 320px;
   max-height: 55vh;
   overflow-y: auto;
-  background: var(--color-white);
-  border-radius: var(--radius);
-  padding: 20px;
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 22px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .msg {
@@ -38,21 +38,23 @@
 
 .msg-bubble {
   max-width: 78%;
-  padding: 12px 18px;
-  border-radius: 18px;
+  padding: 13px 18px;
+  border-radius: 20px;
   font-size: 19px;
   word-break: break-word;
   white-space: pre-wrap;
+  line-height: 1.65;
 }
 
 .msg.user .msg-bubble {
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: linear-gradient(135deg, var(--color-primary), #f0a05f);
+  color: #fff;
   border-bottom-right-radius: 6px;
+  box-shadow: 0 3px 10px rgba(232, 137, 74, 0.25);
 }
 
 .msg.assistant .msg-bubble {
-  background: #eef2f9;
+  background: #fbf0e3;
   color: var(--color-text);
   border-bottom-left-radius: 6px;
 }
@@ -68,7 +70,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #9aa7bd;
+  background: #d8a879;
   animation: blink 1.2s infinite;
 }
 
@@ -98,19 +100,20 @@
 }
 
 .quick-btn {
-  padding: 12px 18px;
+  padding: 12px 20px;
   font-size: 18px;
+  font-weight: 600;
   border: 2px solid var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-white);
-  border-radius: 24px;
+  color: var(--color-primary-dark);
+  background: #fff;
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .quick-btn:hover:not(:disabled) {
   background: var(--color-primary);
-  color: var(--color-white);
+  color: #fff;
 }
 
 .quick-btn:disabled {
@@ -128,8 +131,9 @@
   padding: 16px 18px;
   font-size: 20px;
   border: 2px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 16px;
   outline: none;
+  background: #fff;
   transition: border 0.2s;
 }
 
@@ -138,19 +142,20 @@
 }
 
 .send-btn {
-  padding: 16px 28px;
+  padding: 16px 30px;
   font-size: 20px;
   font-weight: 700;
-  color: var(--color-white);
-  background: var(--color-primary);
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), #f0a05f);
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(232, 137, 74, 0.35);
   transition: all 0.2s;
 }
 
 .send-btn:hover:not(:disabled) {
-  background: var(--color-primary-dark);
+  transform: translateY(-1px);
 }
 
 .send-btn:disabled {
@@ -165,23 +170,24 @@
 }
 
 .action-btn {
-  padding: 14px 24px;
+  padding: 14px 26px;
   font-size: 19px;
-  font-weight: 600;
+  font-weight:600;
   border: none;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .action-btn.speak {
-  background: #22a06b;
-  color: var(--color-white);
+  background: linear-gradient(135deg, #63b57c, #7cc692);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 181, 124, 0.35);
 }
 
 .action-btn.stop {
   background: var(--color-danger);
-  color: var(--color-white);
+  color: #fff;
 }
 
 .action-btn:disabled {
