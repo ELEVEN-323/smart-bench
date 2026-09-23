@@ -1,4 +1,5 @@
 import { Routes, Route, NavLink } from 'react-router-dom'
+import Logo from './components/Logo'
 import Home from './pages/Home'
 import Assistant from './pages/Assistant'
 
@@ -6,7 +7,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="brand">🏡 智能助老座椅</div>
+        <div className="brand">
+          <Logo size={30} />
+          <span>智能助老座椅</span>
+        </div>
         <nav className="nav">
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             🏠 首页
