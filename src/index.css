@@ -1,15 +1,17 @@
 :root {
-  /* 适老化配色：高对比度 */
-  --color-bg: #f5f7fa;
-  --color-primary: #2f6fed;
-  --color-primary-dark: #1e50c0;
-  --color-danger: #e63946;
-  --color-text: #1a1a1a;
-  --color-text-light: #4a5568;
-  --color-white: #ffffff;
-  --color-border: #e2e8f0;
-  --radius: 16px;
-  --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  /* 温馨暖色主题 */
+  --color-bg: #fbf3e8;
+  --color-surface: #ffffff;
+  --color-primary: #e8894a;      /* 暖橙 */
+  --color-primary-dark: #cf6f2f;
+  --color-primary-light: #fcefe2;
+  --color-secondary: #6fae84;    /* 安心绿 */
+  --color-danger: #d95750;
+  --color-text: #46392f;         /* 暖棕 */
+  --color-text-light: #8b7566;
+  --color-border: #f0e1d0;
+  --radius: 20px;
+  --shadow: 0 8px 24px rgba(190, 135, 85, 0.12);
 }
 
 * {
@@ -26,9 +28,12 @@ body,
 
 body {
   font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(232, 137, 74, 0.07), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(111, 174, 132, 0.08), transparent 42%),
+    radial-gradient(circle at 50% 100%, rgba(232, 137, 74, 0.05), transparent 50%),
+    var(--color-bg);
   color: var(--color-text);
-  /* 适老化：全局放大字号 */
   font-size: 18px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -48,14 +53,16 @@ body {
   flex-wrap: wrap;
   gap: 12px;
   padding: 16px 28px;
-  background: var(--color-white);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--color-border);
 }
 
 .brand {
   font-size: 24px;
-  font-weight: 700;
-  color: var(--color-primary);
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  letter-spacing: 0.5px;
 }
 
 .nav {
@@ -66,30 +73,32 @@ body {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 12px 22px;
+  border-radius: 999px;
   text-decoration: none;
   font-size: 20px;
   font-weight: 600;
   color: var(--color-text-light);
-  background: var(--color-bg);
+  background: var(--color-primary-light);
   transition: all 0.2s;
 }
 
 .nav-link:hover {
-  background: #e8eefb;
+  background: #f6dcc3;
+  transform: translateY(-1px);
 }
 
 .nav-link.active {
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: linear-gradient(135deg, var(--color-primary), #f0a05f);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(232, 137, 74, 0.35);
 }
 
 /* ===== 内容区 ===== */
 .content {
   flex: 1;
   width: 100%;
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 28px 20px 48px;
 }
@@ -101,9 +110,9 @@ body {
   font-size: 16px;
   color: var(--color-text-light);
   border-top: 1px solid var(--color-border);
-  background: var(--color-white);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .footer a {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }

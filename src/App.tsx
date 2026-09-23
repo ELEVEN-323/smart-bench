@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <div className="brand">🧓 智能助老座椅</div>
+        <div className="brand">🏡 智能助老座椅</div>
         <nav className="nav">
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
             🏠 首页
@@ -23,7 +23,7 @@ export default function App() {
         </Routes>
       </main>
       <footer className="footer">
-        智能助老座椅 · 演示版 Demo ·{' '}
+        温暖相伴 · 让科技更有温度 ·{' '}
         <a href="https://github.com/ELEVEN-323/smart-bench" target="_blank" rel="noreferrer">
           GitHub 仓库
         </a>

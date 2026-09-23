@@ -12,7 +12,10 @@ const QUICK_QUESTIONS = ['今天天气怎么样？', '附近的医院在哪？',
 
 export default function Assistant() {
   const [messages, setMessages] = useState<Msg[]>([
-    { role: 'assistant', content: '您好！我是您的智能助老助手，有什么可以帮您？' },
+    {
+      role: 'assistant',
+      content: '您好呀！我是您的贴心小助手 😊 有什么可以帮您的吗？您可以问我天气、附近的医院、公交站，或者直接和我聊聊天。',
+    },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
