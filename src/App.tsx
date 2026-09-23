@@ -8,15 +8,15 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <Logo size={30} />
+          <Logo size={26} />
           <span>智能助老座椅</span>
         </div>
         <nav className="nav">
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
-            🏠 首页
+            首页
           </NavLink>
           <NavLink to="/assistant" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
-            🎤 语音助手
+            语音助手
           </NavLink>
         </nav>
       </header>
@@ -27,9 +27,9 @@ export default function App() {
         </Routes>
       </main>
       <footer className="footer">
-        温暖相伴 · 让科技更有温度 ·{' '}
+        智能助老座椅 · 智慧公共设施 ·{' '}
         <a href="https://github.com/ELEVEN-323/smart-bench" target="_blank" rel="noreferrer">
-          GitHub 仓库
+          GitHub
         </a>
       </footer>
     </div>

@@ -1,21 +1,10 @@
-export default function Logo({ size = 34 }: { size?: number }) {
+export default function Logo({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="logoGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#f0a05f" />
-          <stop offset="1" stopColor="#e8894a" />
-        </linearGradient>
-      </defs>
-      {/* 圆角底 */}
-      <rect width="24" height="24" rx="7" fill="url(#logoGradient)" />
-      {/* 靠背 */}
-      <rect x="6" y="8.4" width="12" height="2.2" rx="1.1" fill="#fff" opacity="0.9" />
-      {/* 座面 */}
-      <rect x="6" y="12.6" width="12" height="2.4" rx="1.2" fill="#fff" />
-      {/* 椅腿 */}
-      <rect x="7.2" y="15" width="2" height="3.4" rx="1" fill="#fff" opacity="0.92" />
-      <rect x="14.8" y="15" width="2" height="3.4" rx="1" fill="#fff" opacity="0.92" />
+      <rect x="1.5" y="1.5" width="21" height="21" rx="6" stroke="#262019" strokeWidth="1.5" />
+      <path d="M7 13.5h10" stroke="#262019" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M7 9.5h10" stroke="#262019" strokeWidth="1.5" strokeLinecap="round" opacity="0.55" />
+      <path d="M9 13.5v4M15 13.5v4" stroke="#262019" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
