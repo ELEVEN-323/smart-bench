@@ -1,0 +1,195 @@
+.assistant {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.assistant-head h2 {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.assistant-sub {
+  font-size: 16px;
+  color: var(--color-text-light);
+}
+
+.chat-box {
+  flex: 1;
+  min-height: 320px;
+  max-height: 55vh;
+  overflow-y: auto;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.msg {
+  display: flex;
+}
+
+.msg.user {
+  justify-content: flex-end;
+}
+
+.msg-bubble {
+  max-width: 78%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  font-size: 19px;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.msg.user .msg-bubble {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-bottom-right-radius: 6px;
+}
+
+.msg.assistant .msg-bubble {
+  background: #eef2f9;
+  color: var(--color-text);
+  border-bottom-left-radius: 6px;
+}
+
+/* 打字中动画 */
+.typing {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #9aa7bd;
+  animation: blink 1.2s infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.quick-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quick-btn {
+  padding: 12px 18px;
+  font-size: 18px;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-white);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-btn:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.quick-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.input {
+  flex: 1;
+  padding: 16px 18px;
+  font-size: 20px;
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.send-btn {
+  padding: 16px 28px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white);
+  background: var(--color-primary);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.send-btn:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 14px 24px;
+  font-size: 19px;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn.speak {
+  background: #22a06b;
+  color: var(--color-white);
+}
+
+.action-btn.stop {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tts-hint {
+  font-size: 16px;
+  color: var(--color-text-light);
+}

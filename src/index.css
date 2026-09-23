@@ -1,0 +1,109 @@
+:root {
+  /* 适老化配色：高对比度 */
+  --color-bg: #f5f7fa;
+  --color-primary: #2f6fed;
+  --color-primary-dark: #1e50c0;
+  --color-danger: #e63946;
+  --color-text: #1a1a1a;
+  --color-text-light: #4a5568;
+  --color-white: #ffffff;
+  --color-border: #e2e8f0;
+  --radius: 16px;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  /* 适老化：全局放大字号 */
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== 顶栏 ===== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 28px;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-light);
+  background: var(--color-bg);
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  background: #e8eefb;
+}
+
+.nav-link.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* ===== 内容区 ===== */
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+/* ===== 页脚 ===== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: var(--color-text-light);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-white);
+}
+
+.footer a {
+  color: var(--color-primary);
+}
