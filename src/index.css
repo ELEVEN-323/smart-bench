@@ -117,3 +117,26 @@ body {
 .footer a:hover {
   color: var(--ink);
 }
+
+/* ===== 滚动揭示动画 ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 0.8, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 0.8, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-show {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
