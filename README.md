@@ -22,16 +22,55 @@
 |----|------|------|
 | **Node.js** | 22 或更高 | 构建环境要求，平台一般已预装 |
 | **pnpm** | 11.x | 项目使用 pnpm，锁文件已随仓库提供 |
-| **GitHub 账号** | — | 用于托管代码并触发自动部署 |
-| **部署平台账号** | Vercel 或 EdgeOne Pages | 均可用 GitHub 账号直接登录，免费额度足够 |
+| **部署平台账号** | EdgeOne Pages 或 Vercel | 注册免费，免费额度足够 |
+| **Git 账号** | — | 仅「导入 Git 仓库」的部署方式需要；EdgeOne 也支持直接上传 `dist/` 目录，无需 Git |
 
 **代码仓库**：https://github.com/ELEVEN-323/smart-bench
 
-> 💡 仓库中已包含 `vercel.json` 与 `edgeone.json` 两个部署配置文件（含单页应用路由回退规则），**无需手动创建**。构建命令、输出目录、Node 版本等均已预置。
+> 💡 仓库中已包含 `edgeone.json` 与 `vercel.json` 两个部署配置文件（含单页应用路由回退规则），**无需手动创建**。构建命令、输出目录、Node 版本等均已预置。
 
 ---
 
-## 🚀 方式一：Vercel 部署（推荐）
+## 🚀 方式一：EdgeOne Pages 部署（推荐）
+
+国内平台，**访问速度快，且不需要 GitHub 账号授权**，用微信 / QQ / 邮箱即可注册。
+
+### 步骤
+
+1. 打开 https://pages.edgeone.ai ，注册并登录
+2. 新建项目 → 选择 **导入 Git 仓库** → 授权并选择 **`smart-bench`**
+   > 也可以不走 Git：本地执行 `pnpm build`，把生成的 `dist/` 目录**直接拖拽上传**即可
+3. 构建设置（仓库内 `edgeone.json` 已预置，通常会自动读取）：
+
+   | 配置项 | 值 |
+   |--------|-----|
+   | 安装命令 | `pnpm install` |
+   | 构建命令 | `pnpm build` |
+   | 输出目录 | `dist` |
+   | Node 版本 | `22.11.0` |
+
+   > ⚠️ **Root Directory 必须留空**（代码在仓库根目录，不是子目录）
+
+4. 按需配置环境变量（见下方「环境变量配置」），演示场景可**直接跳过**
+5. 开始部署，等待构建完成，获得在线地址
+
+> 💡 EdgeOne Pages 会自动识别单页应用并处理路由回退；`edgeone.json` 中也已显式声明，双保险。
+
+### 后续更新
+
+```bash
+git push origin main
+```
+
+推送后 EdgeOne 自动重新构建，无需任何手动操作。
+
+---
+
+## 🌐 方式二：Vercel 部署（备用）
+
+> ⚠️ **已知问题**：Vercel 对中国大陆网络环境的注册 / 登录风控较严，可能提示
+> `Your account requires further verification` 而无法登录。
+> 遇到时先试 **Continue with GitHub** 登录；仍不通过请改用「方式一」。
 
 Vercel 与 GitHub 打通后，**每次推送代码都会自动重新构建部署**。
 
@@ -64,30 +103,6 @@ git push origin main
 ```
 
 推送后 Vercel 自动重新构建，无需任何手动操作。
-
----
-
-## 🇨🇳 方式二：EdgeOne Pages 部署（国内访问备用）
-
-Vercel 在国内访问偶尔较慢，建议**同时部署一份 EdgeOne Pages 作为备用地址**，答辩现场可随时切换。
-
-### 步骤
-
-1. 打开 https://pages.edgeone.ai ，用账号登录
-2. 新建项目 → 选择 **导入 Git 仓库** → 授权并选择 **`smart-bench`**
-3. 构建设置（仓库内 `edgeone.json` 已预置，通常会自动读取）：
-
-   | 配置项 | 值 |
-   |--------|-----|
-   | 安装命令 | `pnpm install` |
-   | 构建命令 | `pnpm build` |
-   | 输出目录 | `dist` |
-   | Node 版本 | `22.11.0` |
-
-4. 按需配置环境变量（可跳过）
-5. 开始部署，等待构建完成，获得在线地址
-
-> 💡 EdgeOne Pages 会自动识别单页应用并处理路由回退；`edgeone.json` 中也已显式声明，双保险。
 
 ---
 
@@ -169,9 +184,13 @@ allowBuilds:
 
 这是**预期行为**。当前处于 Mock 模式，问答由内置规则库返回。要接入真实大模型，见上方「接入真实大模型」。
 
-### Q6：部署后地址国内访问很慢
+### Q6：Vercel 登录提示 `Your account requires further verification`
 
-Vercel 国内访问不稳定，请按「方式二」再部署一份 EdgeOne Pages 作为备用地址。
+Vercel 对大陆网络环境的注册 / 登录风控较严。可先试 **Continue with GitHub** 登录；若仍不通过，直接改用「方式一 EdgeOne Pages」——本项目的产物是纯静态文件，换平台不影响任何功能。
+
+### Q7：部署后地址国内访问很慢
+
+请使用「方式一 EdgeOne Pages」（国内节点）。Vercel 国内访问不稳定，仅建议作为备用地址。也可以两个都部署，答辩现场随时切换。
 
 ---
 
