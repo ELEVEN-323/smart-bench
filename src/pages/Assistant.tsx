@@ -55,7 +55,7 @@ export default function Assistant() {
       <div className="assistant-head">
         <h2>🎤 语音助手</h2>
         <p className="assistant-sub">
-          大模型问答 + 语音播报（当前 {import.meta.env.VITE_USE_MOCK === 'true' ? 'Mock 模式' : '真实 API 模式'}）
+          大模型问答 + 语音播报（当前 {import.meta.env.VITE_USE_MOCK !== 'false' ? 'Mock 模式' : '真实 API 模式'}）
         </p>
       </div>
 
