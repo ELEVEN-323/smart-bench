@@ -188,6 +188,8 @@ smart-bench/
 
 ## 八、功能规划
 
+> 📌 完整功能定义（产品功能 8 大模块 + AI 赋能 6 组能力，含状态标注）以 [FEATURES.md](./FEATURES.md) 为准，本节只列优先级与进度。
+
 ### ✅ P0 —— 可运行
 
 | 模块 | 状态 |
@@ -227,5 +229,6 @@ SOS 物理键按压动画 · 久坐提醒 · 扫码充电 · AED 舱开舱动效
 | 文档 | 说明 |
 |------|------|
 | [README](../README.md) | 部署指南（面向使用者 / 评委） |
+| [FEATURES.md](./FEATURES.md) | ⭐ 功能定义总览：8 大模块 + 6 组 AI 能力，唯一权威清单 |
 | [TECH_PLAN.md](./TECH_PLAN.md) | 职责边界、架构、选型、模块拆解、排期、风险预案 |
 | [GIT_WORKFLOW.md](./GIT_WORKFLOW.md) | 分支策略、日常流程、Commit 规范、常见问题 |
