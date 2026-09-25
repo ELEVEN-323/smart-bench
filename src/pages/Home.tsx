@@ -37,7 +37,14 @@ export default function Home() {
               <Link to="/assistant" className="btn btn-primary">
                 体验语音助手
               </Link>
-              <a href="#design" className="btn btn-ghost">
+              <a
+                href="#design"
+                className="btn btn-ghost"
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById('design')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
                 了解设计
               </a>
             </div>
