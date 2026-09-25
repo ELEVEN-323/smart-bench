@@ -1,0 +1,143 @@
+/* ===== 座椅 3D 展示页 ===== */
+
+.structure-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.structure-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stage3d {
+  padding: 28px;
+}
+
+.stage3d-canvas {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fbf9f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  overflow: hidden;
+}
+
+.stage3d-canvas .bench-art {
+  width: 64%;
+  animation: stage3d-rotate 14s ease-in-out infinite;
+}
+
+@keyframes stage3d-rotate {
+  0% {
+    transform: rotateY(0deg) translateY(0);
+  }
+  25% {
+    transform: rotateY(24deg) translateY(-4px);
+  }
+  75% {
+    transform: rotateY(-24deg) translateY(4px);
+  }
+  100% {
+    transform: rotateY(0deg) translateY(0);
+  }
+}
+
+.stage3d-label {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: var(--ink-3);
+  background: rgba(255, 253, 249, 0.85);
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.stage3d-note {
+  margin-top: 14px;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+/* 尺寸表 */
+.dim-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 17px;
+}
+
+.dim-table th,
+.dim-table td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.dim-table th {
+  font-weight: 700;
+  color: var(--ink-2);
+  font-size: 15px;
+}
+
+.dim-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.elder-col {
+  color: var(--accent);
+}
+
+.dim-note {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+/* 适老专属件 */
+.elder-parts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.elder-parts li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.elder-parts b {
+  flex: none;
+  color: var(--ink);
+  font-size: 17px;
+}
+
+.elder-parts span {
+  color: var(--ink-2);
+}
+
+@media (max-width: 860px) {
+  .structure-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage3d-canvas .bench-art {
+    animation: none;
+  }
+}

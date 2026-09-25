@@ -62,8 +62,8 @@
 
 | 项 | 要求 | 说明 |
 |----|------|------|
-| Node.js | **22 或更高** | pnpm 11 要求 Node 22+ |
-| pnpm | 11.x | 仓库锁文件为 `lockfileVersion: 9.0` |
+| Node.js | **18.12 或更高** | pnpm 10 要求 Node 18.12+；EdgeOne 构建环境为 22.11.0 |
+| pnpm | **10.x（锁定 10.34.5）** | 见 `package.json` 的 `packageManager` 字段；锁文件为 `lockfileVersion: 9.0` |
 
 ### 启动
 
@@ -105,17 +105,19 @@ pnpm preview    # 本地预览构建产物，默认 http://localhost:4173
 `pnpm-workspace.yaml` 里的配置**不要删**：
 
 ```yaml
-allowBuilds:
-  esbuild: true
+onlyBuiltDependencies:
+  - esbuild
 ```
 
-`esbuild` 是 Vite 的构建依赖，需要执行 `postinstall`。pnpm 11 的 `strictDepBuilds` 默认为 `true`，若未显式允许，**任何 pnpm 命令都会直接报错**：
+`esbuild` 是 Vite 的构建依赖，需要执行 `postinstall`（下载/校验平台二进制）。未显式允许时构建会报错：
 
 ```
 [ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: esbuild@0.21.5
 ```
 
-> 注：pnpm 11 用 `allowBuilds`（映射表）取代了旧版的 `onlyBuiltDependencies` 列表。
+> 注：本仓库锁定 **pnpm 10.34.5**（`package.json` 的 `packageManager` 字段），
+> 对应 pnpm 10 语法 `onlyBuiltDependencies`。**不要用 pnpm 11 的 `allowBuilds` 语法替换它**——
+> pnpm 11 要求 Node ≥ 22.13，而 EdgeOne 构建机只有 22.11.0，那正是此前构建失败的根因。
 
 ---
 
@@ -197,16 +199,16 @@ smart-bench/
 | 首页总览 | ✅ 已完成 |
 | 语音播报 | ✅ 已完成 |
 | 大模型问答 | ✅ 已完成（Mock 模式） |
-| 座椅 3D 展示 | ⬜ 待开发 |
-| 紧急呼叫 SOS | ⬜ 待开发 |
-| 视频通话 | ⬜ 待开发 |
-| 位置检索 | ⬜ 待开发 |
-| 信息发布 | ⬜ 待开发 |
+| 座椅 3D 展示 | 🟨 占位（线稿 + 尺寸表，等 .glb） |
+| 紧急呼叫 SOS | ✅ 已完成（状态机 + 语音安抚） |
+| 视频通话 | 🟨 模拟（房间号流程，待接 PeerJS） |
+| 位置检索 | ✅ 已完成（Mock POI + 语音导航） |
+| 信息发布 | ✅ 已完成（BroadcastChannel 双窗同步） |
 | 座位状态（多杆联动） | ⬜ 待开发 |
 
 ### 🟡 P1 —— 模拟实现
 
-SOS 物理键按压动画 · 久坐提醒 · 扫码充电 · AED 舱开舱动效 · 自动报警流程 · 环境监测 · 自适应调光滑块 · 隐私授权页面
+SOS 物理键按压动画 · 久坐提醒（⬜ 待做） · 扫码充电 ✅ · AED 舱开舱动效（⬜ 待做） · 自动报警流程（✅ 并入 SOS 自动升级） · 环境监测 ✅ · 自适应调光滑块 ✅ · 隐私授权页面 ✅
 
 ### ⏸ P2 —— 二期规划（不写代码）
 

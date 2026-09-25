@@ -1,0 +1,188 @@
+/* ===== 扫码充电页 ===== */
+
+.charge-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.qr-panel,
+.battery-panel {
+  padding: 28px;
+}
+
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 26px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: #fbf9f4;
+}
+
+.qr-svg {
+  width: 190px;
+  height: 190px;
+  fill: var(--ink);
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.qr-hint {
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+.charge-steps {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.charge-step {
+  flex: 1;
+  text-align: center;
+  padding: 12px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+
+.charge-step.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.charge-step.done {
+  color: var(--green);
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+/* 电池 */
+.port-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.battery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px 0 22px;
+}
+
+.battery-nub {
+  width: 10px;
+  height: 26px;
+  background: var(--ink-3);
+  border-radius: 0 6px 6px 0;
+}
+
+.battery-body {
+  position: relative;
+  width: 200px;
+  height: 76px;
+  border: 4px solid var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.battery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f2c14e, #8fbf6a);
+  transition: width 0.35s;
+}
+
+.battery.full .battery-fill {
+  background: var(--green);
+}
+
+.battery.charging .battery-text {
+  animation: charge-blink 1s steps(2) infinite;
+}
+
+.battery-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes charge-blink {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* 统计 */
+.charge-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbf9f4;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+.stat-value {
+  font-size: 19px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.charge-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.charge-note {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+@media (max-width: 860px) {
+  .charge-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .battery.charging .battery-text {
+    animation: none;
+  }
+}

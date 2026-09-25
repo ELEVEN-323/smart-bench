@@ -140,3 +140,41 @@ body {
     transform: none;
   }
 }
+
+/* ===== 功能页共用组件 ===== */
+
+.topbar {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.page-head {
+  margin-bottom: 28px;
+}
+
+.page-head h2 {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+}
+
+.page-sub {
+  margin-top: 10px;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+
+.page-note {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+/* 首页功能表整行可点击 */
+a.spec-row {
+  display: grid;
+  text-decoration: none;
+  color: inherit;
+}

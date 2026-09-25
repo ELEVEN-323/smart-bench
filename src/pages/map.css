@@ -1,0 +1,254 @@
+/* ===== 位置检索页 ===== */
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+.map-main {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 示意地图 */
+.map-board {
+  position: relative;
+  height: 200px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(rgba(38, 32, 25, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38, 32, 25, 0.05) 1px, transparent 1px),
+    #f3efe7;
+  background-size: 40px 40px;
+  overflow: hidden;
+}
+
+.map-road {
+  position: absolute;
+  background: #eae3d5;
+  border-radius: 999px;
+}
+
+.map-road.r1 {
+  width: 130%;
+  height: 26px;
+  top: 46%;
+  left: -12%;
+  transform: rotate(-14deg);
+}
+
+.map-road.r2 {
+  width: 150%;
+  height: 20px;
+  top: 62%;
+  left: -20%;
+  transform: rotate(12deg);
+}
+
+.map-pin {
+  position: absolute;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  z-index: 1;
+}
+
+.pin-home {
+  left: 44%;
+  top: 40%;
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.pin-hospital {
+  right: 12%;
+  top: 22%;
+}
+
+.pin-bus {
+  left: 14%;
+  top: 30%;
+}
+
+.pin-store {
+  left: 22%;
+  bottom: 12%;
+}
+
+/* 分类与搜索 */
+.map-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.chip.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.map-search {
+  display: flex;
+  gap: 12px;
+}
+
+.map-search .input {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.map-search .input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.btn-primary-inline {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary-inline:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* POI 列表 */
+.poi-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.poi-empty {
+  padding: 28px;
+  text-align: center;
+  font-size: 18px;
+  color: var(--ink-3);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+}
+
+.poi-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s;
+}
+
+.poi-card:hover {
+  border-color: var(--ink-3);
+}
+
+.poi-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--ink);
+  flex-wrap: wrap;
+}
+
+.poi-tag {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.poi-addr {
+  margin-top: 6px;
+  font-size: 16px;
+  color: var(--ink-3);
+}
+
+.poi-dist {
+  margin-top: 4px;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+
+.poi-dist b {
+  color: var(--accent);
+  font-size: 20px;
+}
+
+.poi-speak {
+  flex: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.poi-speak:hover {
+  background: #ecd5c4;
+}
+
+.map-side .map-tips {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+@media (max-width: 860px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+}

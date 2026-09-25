@@ -20,8 +20,8 @@
 
 | 项 | 要求 | 说明 |
 |----|------|------|
-| **Node.js** | 22 或更高 | 构建环境要求，平台一般已预装 |
-| **pnpm** | 11.x | 项目使用 pnpm，锁文件已随仓库提供 |
+| **Node.js** | 18.12 或更高 | pnpm 10 的要求；EdgeOne 构建环境为 22.11.0 |
+| **pnpm** | 10.x（锁定 10.34.5） | 仓库 `packageManager` 已锁定，平台自动使用 |
 | **部署平台账号** | EdgeOne Pages 或 Vercel | 注册免费，免费额度足够 |
 | **Git 账号** | — | 仅「导入 Git 仓库」的部署方式需要；EdgeOne 也支持直接上传 `dist/` 目录，无需 Git |
 
@@ -158,18 +158,18 @@ git push origin main
 `pnpm-workspace.yaml` 被误删或被还原。该文件必须包含：
 
 ```yaml
-allowBuilds:
-  esbuild: true
+onlyBuiltDependencies:
+  - esbuild
 ```
 
-`esbuild` 是 Vite 的构建依赖，pnpm 11 默认禁止依赖执行构建脚本，未显式允许会导致所有 pnpm 命令失败。
+`esbuild` 是 Vite 的构建依赖，需要执行 `postinstall`；未显式允许时构建会报 `ERR_PNPM_IGNORED_BUILDS`（pnpm 11 甚至会拒绝执行任何命令，本仓库已锁定 pnpm 10.34.5 与之兼容）。
 
 ### Q3：构建失败，提示 Node 版本过低
 
-本项目要求 **Node.js 22 及以上**。请在部署平台的设置中将 Node 版本调整为 22.x：
+本项目要求 **Node.js 18.12 及以上**（pnpm 10 的要求）。请在部署平台的设置中确认 Node 版本：
 
-- **Vercel**：Settings → General → Node.js Version
-- **EdgeOne Pages**：构建设置中的 Node 版本，填 `22.11.0`
+- **EdgeOne Pages**：构建设置中的 Node 版本填 `22.11.0`（平台预装版本，仓库 `edgeone.json` 已配置）
+- **Vercel**：Settings → General → Node.js Version，选 22.x
 
 ### Q4：点播报按钮没声音
 
