@@ -1,0 +1,261 @@
+/* ===== 照明能源页 ===== */
+
+.energy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.env-panel,
+.dim-panel,
+.flow-panel {
+  padding: 26px;
+}
+
+.panel-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mini-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-3);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+/* 环境卡片 */
+.env-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.env-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbf9f4;
+}
+
+.env-icon {
+  font-size: 24px;
+}
+
+.env-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.env-label {
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+/* 调光模拟 */
+.dim-lamp-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  margin: 10px 0 22px;
+}
+
+.dim-lamp {
+  position: relative;
+  width: 110px;
+  height: 180px;
+  flex: none;
+}
+
+.dim-lamp-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 26px;
+  border-radius: 8px;
+  background: #2b2721;
+}
+
+.dim-lamp-pole {
+  position: absolute;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 154px;
+  border-radius: 6px;
+  background: #3a352d;
+}
+
+.dim-lamp-glow {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 201, 123, calc(0.95 * var(--glow))), rgba(245, 201, 123, 0) 68%);
+  filter: blur(10px);
+  transition: opacity 0.3s;
+}
+
+.dim-readout {
+  text-align: center;
+}
+
+.dim-big {
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.dim-sub {
+  font-size: 16px;
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+/* 滑块 */
+.dim-slider-label {
+  display: block;
+  font-size: 17px;
+  color: var(--ink-2);
+  margin: 18px 0 8px;
+}
+
+.dim-slider-label b {
+  color: var(--ink);
+  font-size: 19px;
+}
+
+.dim-slider {
+  display: block;
+  width: 100%;
+  height: 12px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.dim-crowd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.dim-note {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-3);
+  background: #f8f5ee;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+/* 能源流向 */
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  margin: 18px 0;
+  flex-wrap: wrap;
+}
+
+.flow-node {
+  flex: 1;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbf9f4;
+  text-align: center;
+}
+
+.flow-icon {
+  font-size: 30px;
+}
+
+.flow-node b {
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.flow-node small {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.flow-arrow {
+  align-self: center;
+  font-size: 22px;
+  color: var(--ink-3);
+  font-weight: 700;
+}
+
+.flow-notes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.flow-notes li {
+  padding-left: 24px;
+  position: relative;
+}
+
+.flow-notes li::before {
+  content: '⚡';
+  position: absolute;
+  left: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .energy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .env-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dim-lamp-glow {
+    transition: none;
+  }
+}

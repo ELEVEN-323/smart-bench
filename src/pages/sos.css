@@ -1,0 +1,252 @@
+/* ===== 紧急呼叫页 ===== */
+
+.sos-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.sos-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 48px 32px;
+}
+
+/* 大号 SOS 按钮（适老化：大热区、强对比、单一主按钮） */
+.sos-btn {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 10px solid #fff;
+  background: #d64545;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  white-space: pre-line;
+  line-height: 1.35;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 6px #d64545,
+    0 14px 40px rgba(214, 69, 69, 0.35);
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s,
+    background 0.3s;
+}
+
+.sos-btn:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.sos-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.sos-btn:disabled {
+  cursor: default;
+}
+
+.sos-btn.calling {
+  animation: sos-pulse 1.1s ease-in-out infinite;
+}
+
+.sos-btn.connected {
+  background: var(--green);
+  box-shadow:
+    0 0 0 6px var(--green),
+    0 14px 40px rgba(71, 98, 79, 0.35);
+}
+
+.sos-btn.escalated {
+  background: #d98a2b;
+  box-shadow:
+    0 0 0 6px #d98a2b,
+    0 14px 40px rgba(217, 138, 43, 0.4);
+}
+
+.sos-btn.ended {
+  background: var(--ink-3);
+  box-shadow: 0 0 0 6px var(--ink-3);
+}
+
+@keyframes sos-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 6px #d64545,
+      0 0 0 12px rgba(214, 69, 69, 0.45),
+      0 14px 40px rgba(214, 69, 69, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px #d64545,
+      0 0 0 26px rgba(214, 69, 69, 0),
+      0 14px 40px rgba(214, 69, 69, 0.35);
+  }
+}
+
+.sos-sub-btn {
+  padding: 14px 26px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sos-sub-btn:hover {
+  border-color: var(--ink-3);
+  background: #f1ece3;
+}
+
+/* 右侧面板 */
+.sos-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+
+.sos-state-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.sos-state-desc {
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.sos-elapsed {
+  margin-top: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 流程时间线 */
+.sos-flow {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sos-flow-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0 12px 0;
+  font-size: 18px;
+  color: var(--ink-3);
+}
+
+.sos-flow-step:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 38px;
+  bottom: -6px;
+  width: 2px;
+  background: var(--line);
+}
+
+.sos-flow-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--line);
+  flex: none;
+  z-index: 1;
+}
+
+.sos-flow-step.done .sos-flow-dot {
+  background: var(--green);
+}
+
+.sos-flow-step.done {
+  color: var(--ink-2);
+}
+
+.sos-flow-step.active .sos-flow-dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+
+.sos-flow-step.active {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.sos-flow-badge {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 700;
+  color: #b3541e;
+  background: #f9e6d2;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* 安全保障列表 */
+.sos-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 17px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.sos-list li {
+  padding-left: 26px;
+  position: relative;
+}
+
+.sos-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 800;
+}
+
+/* 响应式 */
+@media (max-width: 860px) {
+  .sos-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sos-btn.calling {
+    animation: none;
+  }
+}

@@ -1,0 +1,153 @@
+/* ===== 视频通话页 ===== */
+
+.call-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 340px;
+  gap: 22px;
+  align-items: start;
+}
+
+.call-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.call-stage {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.call-screen {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(245, 201, 123, 0.25), transparent 60%),
+    #23201a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.call-screen.live {
+  border-color: var(--green);
+}
+
+.call-idle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.call-avatar {
+  font-size: 86px;
+  line-height: 1;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+}
+
+.call-avatar.ringing {
+  animation: ring-shake 0.9s ease-in-out infinite;
+}
+
+@keyframes ring-shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+.call-hint {
+  font-size: 20px;
+  font-weight: 700;
+  color: #efe9dc;
+}
+
+.call-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.call-btn {
+  min-width: 220px;
+  padding: 18px 34px;
+  border: none;
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.call-btn:hover {
+  transform: translateY(-2px);
+}
+
+.call-start {
+  background: var(--green);
+  color: #fff;
+}
+
+.call-end {
+  background: #d64545;
+  color: #fff;
+}
+
+.call-room {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.call-room-note {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+
+.call-notes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.call-notes li {
+  padding-left: 24px;
+  position: relative;
+}
+
+.call-notes li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 800;
+}
+
+@media (max-width: 860px) {
+  .call-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-avatar.ringing {
+    animation: none;
+  }
+}
