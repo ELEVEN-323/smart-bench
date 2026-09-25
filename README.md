@@ -4,7 +4,7 @@
 
 [![Repo](https://img.shields.io/badge/GitHub-smart--bench-blue)](https://github.com/ELEVEN-323/smart-bench)
 
-**在线体验地址：** _（部署完成后在此填入地址）_
+**在线体验地址：** https://smart-bench-bdlywswb.edgeone.cool
 
 ---
 

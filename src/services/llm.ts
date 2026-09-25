@@ -11,7 +11,8 @@ export interface ChatMessage {
  * 优先级：真实 API → 出错/未配置时 → Mock 兜底，保证演示永不失败。
  */
 export async function askLLM(question: string): Promise<string> {
-  const useMock = import.meta.env.VITE_USE_MOCK === 'true'
+  // Mock 优先：默认即 Mock，只有显式设为 false 才走真实 API
+  const useMock = import.meta.env.VITE_USE_MOCK !== 'false'
   const apiKey = import.meta.env.VITE_LLM_API_KEY
   const baseUrl = import.meta.env.VITE_LLM_BASE_URL || 'https://api.deepseek.com'
 
