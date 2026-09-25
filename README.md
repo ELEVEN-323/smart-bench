@@ -33,11 +33,11 @@
 
 ## 🚀 方式一：EdgeOne Pages 部署（推荐）
 
-国内平台，**访问速度快，且不需要 GitHub 账号授权**，用微信 / QQ / 邮箱即可注册。
+国内平台，**访问速度快，且不需要 GitHub 账号授权**，用微信 / QQ / 邮箱即可注册（腾讯云需先完成实名认证）。
 
 ### 步骤
 
-1. 打开 https://pages.edgeone.ai ，注册并登录
+1. 打开 https://console.cloud.tencent.com/edgeone/pages （腾讯云 EdgeOne Pages 控制台）
 2. 新建项目 → 选择 **导入 Git 仓库** → 授权并选择 **`smart-bench`**
    > 也可以不走 Git：本地执行 `pnpm build`，把生成的 `dist/` 目录**直接拖拽上传**即可
 3. 构建设置（仓库内 `edgeone.json` 已预置，通常会自动读取）：
@@ -247,6 +247,7 @@ smart-bench/
 |------|------|
 | [技术方案](docs/TECH_PLAN.md) | 范围边界、系统架构、技术选型、模块拆解、排期与风险预案 |
 | [开发文档](docs/DEVELOPMENT.md) | 本地开发、目录结构、功能规划、Mock 优先约定 |
+| [外观建模指导](docs/MODELING_GUIDE.md) | 设计组：外观形态、元件位置、关键尺寸与 `.glb` 导出规范 |
 | [团队 Git 协作指南](docs/GIT_WORKFLOW.md) | 分支策略、日常流程、Commit 规范 |
 
 ---
