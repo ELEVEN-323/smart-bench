@@ -1,4 +1,4 @@
-/* ===== 视频通话页 ===== */
+/* ===== 视频通话页（适老化：大字、克制动效） ===== */
 
 .call-layout {
   display: grid;
@@ -45,30 +45,32 @@
 }
 
 .call-avatar {
-  font-size: 86px;
-  line-height: 1;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #efe9dc;
 }
 
 .call-avatar.ringing {
-  animation: ring-shake 0.9s ease-in-out infinite;
+  animation: ring-pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes ring-shake {
+@keyframes ring-pulse {
   0%,
   100% {
-    transform: rotate(0);
+    box-shadow: 0 0 0 0 rgba(245, 201, 123, 0.4);
   }
-  25% {
-    transform: rotate(-8deg);
-  }
-  75% {
-    transform: rotate(8deg);
+  50% {
+    box-shadow: 0 0 0 18px rgba(245, 201, 123, 0);
   }
 }
 
 .call-hint {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: #efe9dc;
 }
@@ -79,12 +81,16 @@
 }
 
 .call-btn {
-  min-width: 220px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 240px;
+  min-height: 64px;
   padding: 18px 34px;
   border: none;
   border-radius: 999px;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.15s;
 }
@@ -99,22 +105,23 @@
 }
 
 .call-end {
-  background: #d64545;
+  background: var(--danger);
   color: #fff;
 }
 
 .call-room {
   font-size: 34px;
-  font-weight: 800;
-  letter-spacing: 3px;
+  font-weight: 700;
+  letter-spacing: 2px;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
 .call-room-note {
   margin-top: 8px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink-3);
+  line-height: 1.6;
 }
 
 .call-notes {
@@ -122,7 +129,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--ink-2);
 }

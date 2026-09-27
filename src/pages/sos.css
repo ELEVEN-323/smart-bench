@@ -1,4 +1,4 @@
-/* ===== 紧急呼叫页 ===== */
+/* ===== 紧急呼叫页（适老化：大热区、克制动效） ===== */
 
 .sos-layout {
   display: grid;
@@ -15,13 +15,13 @@
   padding: 48px 32px;
 }
 
-/* 大号 SOS 按钮（适老化：大热区、强对比、单一主按钮） */
+/* 大号 SOS 按钮 */
 .sos-btn {
-  width: 230px;
-  height: 230px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   border: 10px solid #fff;
-  background: #d64545;
+  background: var(--danger);
   color: #fff;
   font-size: 34px;
   font-weight: 800;
@@ -30,8 +30,8 @@
   line-height: 1.35;
   cursor: pointer;
   box-shadow:
-    0 0 0 6px #d64545,
-    0 14px 40px rgba(214, 69, 69, 0.35);
+    0 0 0 6px var(--danger),
+    0 14px 40px rgba(214, 69, 65, 0.35);
   transition:
     transform 0.15s,
     box-shadow 0.2s,
@@ -77,19 +77,23 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 6px #d64545,
-      0 0 0 12px rgba(214, 69, 69, 0.45),
-      0 14px 40px rgba(214, 69, 69, 0.35);
+      0 0 0 6px var(--danger),
+      0 0 0 12px rgba(214, 69, 65, 0.45),
+      0 14px 40px rgba(214, 69, 65, 0.35);
   }
   50% {
     box-shadow:
-      0 0 0 6px #d64545,
-      0 0 0 26px rgba(214, 69, 69, 0),
-      0 14px 40px rgba(214, 69, 69, 0.35);
+      0 0 0 6px var(--danger),
+      0 0 0 26px rgba(214, 69, 65, 0),
+      0 14px 40px rgba(214, 69, 65, 0.35);
   }
 }
 
 .sos-sub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
   padding: 14px 26px;
   border-radius: 12px;
   border: 1px solid var(--line);
@@ -113,37 +117,25 @@
   gap: 20px;
 }
 
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-}
-
-.panel-title {
-  font-size: 19px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--ink);
-}
-
 .sos-state-title {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
   margin-bottom: 6px;
 }
 
 .sos-state-desc {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.75;
   color: var(--ink-2);
 }
 
 .sos-elapsed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 12px;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
@@ -154,7 +146,6 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
 .sos-flow-step {
@@ -162,7 +153,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 0 12px 0;
+  padding: 12px 0;
   font-size: 18px;
   color: var(--ink-3);
 }

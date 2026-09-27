@@ -1,261 +1,314 @@
-/* ===== 照明能源页 ===== */
+/* ===== 照明能源（浅色编辑式） =====
+   与首页同一套写法：发丝线 + 留白分组，数字走 Space Grotesk。
+   注意 .flow / .chip 都限定在 .energy 内，避免和首页的同名类互相覆盖。 */
 
+.energy-badge {
+  margin-left: 12px;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-num);
+  font-size: 12.5px;
+  letter-spacing: 0.3px;
+  color: var(--ink-3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.energy-badge:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---- 指标：一条发丝线 + 四栏 ---- */
+.energy-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.metric-card {
+  padding: 20px 20px 6px 0;
+}
+
+.metric-card + .metric-card {
+  padding-left: 22px;
+  border-left: 1px solid var(--line);
+}
+
+.metric-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+.metric-head svg {
+  color: var(--accent);
+}
+
+.metric-value {
+  margin-top: 12px;
+  font-family: var(--font-num);
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-unit {
+  margin-left: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+/* ---- 两栏版块 ---- */
 .energy-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 22px;
+  gap: 0 56px;
 }
 
-.env-panel,
-.dim-panel,
-.flow-panel {
-  padding: 26px;
+/* ---- 环境监测：一行一项 ---- */
+.env-list {
+  list-style: none;
 }
 
-.panel-title-row {
+.env-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
 }
 
-.mini-btn {
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface);
+.env-item:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.env-item svg {
   color: var(--ink-3);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.mini-btn:hover {
-  color: var(--ink);
-  border-color: var(--ink-3);
-}
-
-/* 环境卡片 */
-.env-cards {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.env-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 16px 8px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fbf9f4;
-}
-
-.env-icon {
-  font-size: 24px;
-}
-
-.env-value {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.env-label {
-  font-size: 14px;
-  color: var(--ink-3);
-}
-
-/* 调光模拟 */
-.dim-lamp-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 36px;
-  margin: 10px 0 22px;
-}
-
-.dim-lamp {
-  position: relative;
-  width: 110px;
-  height: 180px;
   flex: none;
 }
 
-.dim-lamp-head {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 76px;
-  height: 26px;
-  border-radius: 8px;
-  background: #2b2721;
+.env-label {
+  font-size: 15.5px;
+  color: var(--ink-2);
 }
 
-.dim-lamp-pole {
-  position: absolute;
-  top: 26px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 154px;
-  border-radius: 6px;
-  background: #3a352d;
+.env-value {
+  margin-left: auto;
+  font-family: var(--font-num);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
-.dim-lamp-glow {
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 201, 123, calc(0.95 * var(--glow))), rgba(245, 201, 123, 0) 68%);
-  filter: blur(10px);
-  transition: opacity 0.3s;
+.env-value em {
+  font-style: normal;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  margin-left: 4px;
 }
 
+/* ---- 自适应调光 ---- */
 .dim-readout {
-  text-align: center;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 18px;
 }
 
 .dim-big {
-  font-size: 52px;
-  font-weight: 800;
+  font-family: var(--font-num);
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
-  line-height: 1.1;
 }
 
 .dim-sub {
-  font-size: 16px;
-  color: var(--ink-2);
-  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-3);
 }
 
-/* 滑块 */
+.dim-sub b {
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
 .dim-slider-label {
   display: block;
-  font-size: 17px;
+}
+
+.dim-slider-label > span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
   color: var(--ink-2);
-  margin: 18px 0 8px;
 }
 
 .dim-slider-label b {
+  font-family: var(--font-num);
+  font-weight: 600;
   color: var(--ink);
-  font-size: 19px;
 }
 
 .dim-slider {
-  display: block;
   width: 100%;
-  height: 12px;
-  accent-color: var(--accent);
+  height: 4px;
+  margin: 6px 0 18px;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--warm) 100%);
+  outline: none;
+  cursor: pointer;
+}
+
+.dim-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--accent);
+  box-shadow: 0 1px 4px rgba(46, 34, 22, 0.2);
   cursor: pointer;
 }
 
 .dim-crowd {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 16px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.dim-note {
-  margin-top: 18px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--ink-3);
-  background: #f8f5ee;
-  border-radius: 10px;
-  padding: 12px 16px;
-}
-
-/* 能源流向 */
-.flow {
-  display: flex;
-  align-items: stretch;
-  gap: 10px;
-  margin: 18px 0;
-  flex-wrap: wrap;
-}
-
-.flow-node {
-  flex: 1;
-  min-width: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 18px 12px;
+/* ---- 人流标签（控件保留形状） ---- */
+.energy .chip {
+  min-height: 38px;
+  padding: 7px 16px;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fbf9f4;
-  text-align: center;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 14.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.flow-icon {
-  font-size: 30px;
-}
-
-.flow-node b {
-  font-size: 18px;
+.energy .chip:hover {
+  border-color: var(--ink-3);
   color: var(--ink);
 }
 
-.flow-node small {
-  font-size: 14px;
-  color: var(--ink-2);
+.energy .chip.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
 }
 
-.flow-arrow {
-  align-self: center;
-  font-size: 22px;
-  color: var(--ink-3);
-  font-weight: 700;
-}
-
-.flow-notes {
+/* ---- 能源流向：三栏 + 发丝线 ---- */
+.energy .flow {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.energy .flow-node {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 15px;
-  line-height: 1.65;
+  gap: 6px;
+  padding: 18px 20px 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.energy .flow-node + .flow-node {
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+
+.energy .flow-node svg {
+  color: var(--accent);
+}
+
+.energy .flow-node b {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.energy .flow-node small {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.energy .flow-notes {
+  list-style: none;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.energy .flow-notes li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 14px;
+  line-height: 1.75;
   color: var(--ink-2);
 }
 
-.flow-notes li {
-  padding-left: 24px;
-  position: relative;
-}
-
-.flow-notes li::before {
-  content: '⚡';
+.energy .flow-notes li::before {
+  content: '';
   position: absolute;
   left: 0;
-  font-size: 14px;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-soft);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
+  .energy-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-card {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .metric-card:nth-child(even) {
+    padding-left: 20px;
+    border-left: 1px solid var(--line);
+  }
+
   .energy-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .energy .flow {
     grid-template-columns: 1fr;
   }
 
-  .env-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dim-lamp-glow {
-    transition: none;
+  .energy .flow-node + .flow-node {
+    padding-left: 0;
+    border-left: none;
   }
 }

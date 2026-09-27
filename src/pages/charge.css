@@ -1,26 +1,21 @@
-/* ===== 扫码充电页 ===== */
+/* ===== 扫码充电页（适老化：大字、大热区） =====
+   与首页同一套写法：用发丝线分栏分组，不再格子套格子。
+   注意：本文件的 .stat 必须限定在 .charge-stats 内，
+   否则会串到首页首屏那条数据带上（同名类，后加载的会赢）。 */
 
 .charge-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 22px;
+  gap: 56px;
   align-items: start;
 }
 
-.qr-panel,
-.battery-panel {
-  padding: 28px;
-}
-
+/* ---- 二维码：码本身就是那个「实体」，不再套虚线框 ---- */
 .qr-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 26px;
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-  background: #fbf9f4;
+  gap: 16px;
 }
 
 .qr-svg {
@@ -36,39 +31,33 @@
 .qr-hint {
   font-size: 15px;
   color: var(--ink-3);
+  text-align: center;
 }
 
+/* ---- 步骤：一条发丝线 + 四格，不用四个小框 ---- */
 .charge-steps {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
 }
 
 .charge-step {
-  flex: 1;
-  text-align: center;
-  padding: 12px 10px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  font-size: 17px;
-  font-weight: 700;
+  padding: 14px 10px 2px 0;
+  font-size: 15px;
+  font-weight: 500;
   color: var(--ink-3);
 }
 
 .charge-step.active {
   color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-soft);
 }
 
 .charge-step.done {
   color: var(--green);
-  border-color: var(--green);
-  background: var(--green-soft);
 }
 
-/* 电池 */
+/* ---- 端口选择（控件保留形状） ---- */
 .port-row {
   display: flex;
   align-items: center;
@@ -77,6 +66,36 @@
   margin-bottom: 18px;
 }
 
+.port-label {
+  font-size: 17px;
+  color: var(--ink-2);
+}
+
+.port-chip {
+  min-height: 48px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.port-chip:hover {
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+
+.port-chip.on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+/* ---- 电池图形 ---- */
 .battery {
   display: flex;
   align-items: center;
@@ -121,8 +140,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-num);
   font-size: 28px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
@@ -133,51 +153,79 @@
   }
 }
 
-/* 统计 */
+/* ---- 三项统计：发丝线分栏（首页数据带同款） ---- */
 .charge-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  border-top: 1px solid var(--line);
 }
 
-.stat {
+.charge-stats .stat {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 14px 10px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fbf9f4;
-  text-align: center;
+  padding: 16px 16px 2px 0;
 }
 
-.stat-label {
-  font-size: 14px;
+.charge-stats .stat + .stat {
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+}
+
+.charge-stats .stat-label {
+  font-size: 13.5px;
   color: var(--ink-3);
 }
 
-.stat-value {
-  font-size: 19px;
+.charge-stats .stat-value {
+  font-family: var(--font-num);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- 操作 ---- */
 .charge-actions {
   display: flex;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 24px;
   flex-wrap: wrap;
 }
 
+.charge-stop {
+  min-height: 56px;
+  padding: 14px 26px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.charge-stop:hover {
+  border-color: var(--ink-3);
+  background: #f1ece3;
+}
+
+/* 脚注：一条细竖线，不用底色块 */
 .charge-note {
-  margin-top: 16px;
-  font-size: 15px;
-  color: var(--ink-3);
+  margin-top: 20px;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent-soft);
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.75;
 }
 
 @media (max-width: 860px) {
   .charge-layout {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 }
 

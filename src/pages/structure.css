@@ -1,60 +1,83 @@
-/* ===== 座椅 3D 展示页 ===== */
+/* ===== 座椅 3D 展示页 · 滚动分镜 ===== */
 
-.structure-layout {
+.structure-story {
+  padding-top: 40px;
+}
+
+/* ===== 页头（与其他功能页同一套节奏） ===== */
+.story-head {
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+
+/* 与其他页 .page-kicker 同款：强调色 + 前导短线 */
+.story-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.story-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.story-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.8vw, 34px);
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 14px;
+}
+
+.story-lede {
+  margin-top: 12px;
+  font-size: 17px;
+  color: var(--ink-2);
+  line-height: 1.75;
+}
+
+/* ===== 滚动叙事：左 sticky 3D，右滚动文案 ===== */
+.story {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 22px;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
   align-items: start;
 }
 
-.structure-side {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.story-visual {
+  position: sticky;
+  top: 96px;
 }
 
-.stage3d {
-  padding: 28px;
-}
-
-.stage3d-canvas {
+.story-canvas {
   position: relative;
   aspect-ratio: 4 / 3;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #fbf9f4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink-3);
+  background: var(--surface);
   overflow: hidden;
 }
 
-.stage3d-canvas .bench-art {
-  width: 64%;
-  animation: stage3d-rotate 14s ease-in-out infinite;
+.story-canvas model-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-@keyframes stage3d-rotate {
-  0% {
-    transform: rotateY(0deg) translateY(0);
-  }
-  25% {
-    transform: rotateY(24deg) translateY(-4px);
-  }
-  75% {
-    transform: rotateY(-24deg) translateY(4px);
-  }
-  100% {
-    transform: rotateY(0deg) translateY(0);
-  }
-}
-
-.stage3d-label {
+.story-canvas-caption {
   position: absolute;
-  left: 16px;
-  bottom: 14px;
-  font-size: 14px;
+  left: 14px;
+  bottom: 12px;
+  font-size: 12px;
   letter-spacing: 0.3px;
   color: var(--ink-3);
   background: rgba(255, 253, 249, 0.85);
@@ -62,35 +85,156 @@
   border-radius: 999px;
 }
 
-.stage3d-note {
-  margin-top: 14px;
-  font-size: 15px;
+.model-fallback {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   color: var(--ink-3);
+  padding: 24px;
 }
 
-/* 尺寸表 */
-.dim-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 17px;
+.model-fallback .bench-art {
+  width: 60%;
 }
 
-.dim-table th,
-.dim-table td {
-  padding: 12px 10px;
+.model-fallback-note {
+  font-size: 13px;
+  color: var(--ink-3);
   text-align: center;
+}
+
+.story-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-step {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0;
   border-bottom: 1px solid var(--line);
 }
 
-.dim-table th {
+.story-step:first-child {
+  padding-top: 0;
+}
+
+.story-step:last-child {
+  border-bottom: none;
+}
+
+.story-step-index {
+  font-family: var(--font-num);
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.story-step-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+.story-step-desc {
+  margin-top: 12px;
+  font-size: 16px;
   color: var(--ink-2);
+  line-height: 1.8;
+}
+
+.story-step-points {
+  list-style: none;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.story-step-points li {
+  font-size: 15px;
+  color: var(--ink-2);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.story-step-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+/* ===== 下方内容块 ===== */
+.story-block {
+  margin-top: 80px;
+}
+
+.story-block-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+/* ===== 尺寸表 ===== */
+.table-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.size-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 15px;
 }
 
-.dim-table td:first-child {
+.size-table th,
+.size-table td {
+  padding: 14px 16px;
   text-align: left;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+.size-table thead th {
+  background: #f3efe8;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+  letter-spacing: 0.5px;
+}
+
+.size-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.size-table td:first-child {
   font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.size-table td:last-child {
   color: var(--ink-2);
 }
 
@@ -98,46 +242,57 @@
   color: var(--accent);
 }
 
-.dim-note {
-  margin-top: 12px;
-  font-size: 14px;
+.table-note {
+  font-size: 13px;
   color: var(--ink-3);
+  margin-top: 12px;
 }
 
-/* 适老专属件 */
+/* ===== 适老专属件 ===== */
 .elder-parts {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
 }
 
 .elder-parts li {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
 }
 
 .elder-parts b {
   flex: none;
   color: var(--ink);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .elder-parts span {
   color: var(--ink-2);
 }
 
+/* ===== 响应式 ===== */
 @media (max-width: 860px) {
-  .structure-layout {
+  .story {
     grid-template-columns: 1fr;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .stage3d-canvas .bench-art {
-    animation: none;
+  .story-visual {
+    position: static;
+  }
+
+  .story-step {
+    min-height: auto;
+  }
+
+  .elder-parts {
+    grid-template-columns: 1fr;
   }
 }

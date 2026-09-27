@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Steps } from 'antd'
 import './charge.css'
 
 /** 演示用伪二维码（确定性图案，不真实可扫，仅示意） */
@@ -6,7 +7,6 @@ function FakeQr() {
   const cells = useMemo(() => {
     const n = 25
     const grid: boolean[][] = Array.from({ length: n }, () => Array(n).fill(false))
-    // 三个定位角
     const finder = (r0: number, c0: number) => {
       for (let r = r0; r < r0 + 7; r++)
         for (let c = c0; c < c0 + 7; c++) {
@@ -18,7 +18,6 @@ function FakeQr() {
     finder(0, 0)
     finder(0, n - 7)
     finder(n - 7, 0)
-    // 伪随机数据区（确定性种子）
     let seed = 42
     const rand = () => {
       seed = (seed * 1103515245 + 12345) % 2147483648
@@ -78,7 +77,8 @@ export default function Charge() {
   return (
     <div className="charge">
       <div className="page-head">
-        <h2>🔌 扫码充电</h2>
+        <span className="page-kicker">便民服务</span>
+        <h2>扫码充电</h2>
         <p className="page-sub">
           座椅扶手内嵌充电口，扫码即充
           <span className="page-note">（演示为模拟充电流程，电量与费用为假数据）</span>
@@ -92,20 +92,20 @@ export default function Charge() {
             <FakeQr />
             <p className="qr-hint">演示用示意码 · 点击下方「开始充电」进入模拟</p>
           </div>
-          <div className="charge-steps">
-            <span className="charge-step done">① 扫码</span>
-            <span className={`charge-step ${charging ? 'done' : 'active'}`}>② 充电中</span>
-            <span className={`charge-step ${level >= 100 ? 'done' : ''}`}>③ 完成</span>
-          </div>
+          <Steps
+            size="small"
+            current={level >= 100 ? 3 : charging ? 1 : 0}
+            items={[{ title: '扫码' }, { title: '充电中' }, { title: '完成' }]}
+          />
         </section>
 
         <section className="panel battery-panel">
           <h3 className="panel-title">充电状态</h3>
 
           <div className="port-row">
-            <span className="dim-slider-label">充电口：</span>
+            <span className="port-label">充电口：</span>
             {['USB-C', '无线充电'].map((p) => (
-              <button key={p} className={`chip ${port === p ? 'on' : ''}`} onClick={() => setPort(p)}>
+              <button key={p} className={`port-chip ${port === p ? 'on' : ''}`} onClick={() => setPort(p)}>
                 {p}
               </button>
             ))}
@@ -122,7 +122,9 @@ export default function Charge() {
           <div className="charge-stats">
             <div className="stat">
               <span className="stat-label">已充时长</span>
-              <b className="stat-value">{String(Math.floor(elapsed / 60)).padStart(2, '0')}:{String(elapsed % 60).padStart(2, '0')}</b>
+              <b className="stat-value">
+                {String(Math.floor(elapsed / 60)).padStart(2, '0')}:{String(elapsed % 60).padStart(2, '0')}
+              </b>
             </div>
             <div className="stat">
               <span className="stat-label">预计费用</span>
@@ -139,7 +141,7 @@ export default function Charge() {
               {level >= 100 ? '重新充电' : '开始充电'}
             </button>
             {charging && (
-              <button className="sos-sub-btn" onClick={stop}>
+              <button className="charge-stop" onClick={stop}>
                 停止
               </button>
             )}

@@ -1,5 +1,7 @@
-import { Routes, Route, NavLink } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import Logo from './components/Logo'
+import SiteFooter from './components/SiteFooter'
 import Home from './pages/Home'
 import Assistant from './pages/Assistant'
 import Sos from './pages/Sos'
@@ -24,9 +26,23 @@ const NAV = [
   { to: '/structure', label: '3D 展示' },
 ]
 
+/** 路由切换时回到顶部：否则从首页深处跳到别的页面会停在半空 */
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    const html = document.documentElement
+    const prev = html.style.scrollBehavior
+    html.style.scrollBehavior = 'auto' // 关掉平滑，避免几千像素的长距离滚动
+    window.scrollTo(0, 0)
+    html.style.scrollBehavior = prev
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   return (
     <div className="app">
+      <ScrollToTop />
       <header className="topbar">
         <div className="brand">
           <Logo size={26} />
@@ -59,12 +75,7 @@ export default function App() {
           <Route path="/structure" element={<Structure />} />
         </Routes>
       </main>
-      <footer className="footer">
-        智能助老座椅 · 智慧公共设施 ·{' '}
-        <a href="https://github.com/ELEVEN-323/smart-bench" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Monitor, Wrench } from 'lucide-react'
+import { Segmented } from 'antd'
 import { subscribeNotices, addNotice, setPublished, removeNotice, type Notice } from '../services/realtime'
 import './notice.css'
 
@@ -34,7 +36,8 @@ export default function Notice() {
   return (
     <div className="notice">
       <div className="page-head">
-        <h2>📢 信息发布</h2>
+        <span className="page-kicker">社区服务</span>
+        <h2>信息发布</h2>
         <p className="page-sub">
           社区公告一键上屏，多杆实时同步
           <span className="page-note">（开两个窗口：一个发布、一个屏显，可看实时联动）</span>
@@ -42,12 +45,14 @@ export default function Notice() {
       </div>
 
       <div className="notice-tabs">
-        <button className={`tab ${tab === 'screen' ? 'on' : ''}`} onClick={() => setTab('screen')}>
-          🖥 屏端显示
-        </button>
-        <button className={`tab ${tab === 'admin' ? 'on' : ''}`} onClick={() => setTab('admin')}>
-          🛠 管理发布
-        </button>
+        <Segmented
+          value={tab}
+          onChange={(v) => setTab(v as 'screen' | 'admin')}
+          options={[
+            { label: '屏端显示', value: 'screen', icon: <Monitor size={16} /> },
+            { label: '管理发布', value: 'admin', icon: <Wrench size={16} /> },
+          ]}
+        />
       </div>
 
       {tab === 'screen' ? (
@@ -91,7 +96,7 @@ export default function Notice() {
                   <div className="admin-item-main">
                     <b>{n.title}</b>
                     <span className="admin-item-meta">
-                      {fmtTime(n.createdAt)} · {n.published ? '🟢 已发布' : '⚪ 草稿'}
+                      {fmtTime(n.createdAt)} · <span className={`admin-status ${n.published ? 'pub' : ''}`}>{n.published ? '已发布' : '草稿'}</span>
                     </span>
                     <p className="admin-item-content">{n.content}</p>
                   </div>

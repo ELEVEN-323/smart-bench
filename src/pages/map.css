@@ -1,16 +1,16 @@
-/* ===== 位置检索页 ===== */
+/* ===== 位置检索页（适老化：大字、高对比） ===== */
 
 .map-layout {
   display: grid;
   grid-template-columns: 1fr 300px;
-  gap: 24px;
+  gap: 56px;
   align-items: start;
 }
 
 .map-main {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
 /* 示意地图 */
@@ -51,9 +51,12 @@
 
 .map-pin {
   position: absolute;
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
   font-weight: 700;
-  padding: 6px 14px;
+  padding: 8px 14px;
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -70,13 +73,13 @@
 }
 
 .pin-hospital {
-  right: 12%;
-  top: 22%;
+  right: 10%;
+  top: 20%;
 }
 
 .pin-bus {
-  left: 14%;
-  top: 30%;
+  left: 12%;
+  top: 28%;
 }
 
 .pin-store {
@@ -91,24 +94,25 @@
   gap: 10px;
 }
 
-.chip {
-  padding: 10px 20px;
+.map-filters .chip {
+  min-height: 48px;
+  padding: 10px 22px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink-2);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
 }
 
-.chip:hover {
+.map-filters .chip:hover {
   border-color: var(--ink-3);
   color: var(--ink);
 }
 
-.chip.on {
+.map-filters .chip.on {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
@@ -121,8 +125,9 @@
 
 .map-search .input {
   flex: 1;
+  min-height: 60px;
   padding: 14px 18px;
-  font-size: 18px;
+  font-size: 19px;
   border-radius: 12px;
   border: 1px solid var(--line);
   background: var(--surface);
@@ -134,10 +139,15 @@
   outline-offset: 1px;
 }
 
-.btn-primary-inline {
+/* 只作用于本页搜索按钮，不再覆盖全站的 .btn-primary-inline */
+.map-search .btn-primary-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
   padding: 14px 28px;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--ink);
   color: #fff;
   font-size: 18px;
@@ -145,84 +155,57 @@
   cursor: pointer;
 }
 
-.btn-primary-inline:disabled {
+.map-search .btn-primary-inline:disabled {
   opacity: 0.6;
   cursor: default;
 }
 
-/* POI 列表 */
-.poi-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.poi-empty {
-  padding: 28px;
-  text-align: center;
-  font-size: 18px;
-  color: var(--ink-3);
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-}
-
-.poi-card {
-  display: flex;
+/* POI 列表：一条一发丝线（AntD List 自带下边框，这里对齐节奏） */
+.map-main .ant-list-item {
+  padding: 18px 0;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 22px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  transition: border-color 0.15s;
 }
 
-.poi-card:hover {
-  border-color: var(--ink-3);
+.map-main .ant-list-item:last-child {
+  border-block-end: none;
 }
 
 .poi-name {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 21px;
-  font-weight: 800;
+  font-size: 19px;
+  font-weight: 600;
   color: var(--ink);
   flex-wrap: wrap;
 }
 
-.poi-tag {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--green);
-  background: var(--green-soft);
-  padding: 3px 12px;
-  border-radius: 999px;
-}
-
-.poi-addr {
-  margin-top: 6px;
-  font-size: 16px;
+.poi-desc {
+  font-size: 15px;
   color: var(--ink-3);
 }
 
-.poi-dist {
-  margin-top: 4px;
-  font-size: 17px;
+.poi-desc b {
+  font-family: var(--font-num);
+  font-weight: 600;
   color: var(--ink-2);
 }
 
-.poi-dist b {
+.poi-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--accent);
-  font-size: 20px;
+  flex: none;
 }
 
 .poi-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   flex: none;
-  padding: 14px 20px;
+  min-height: 56px;
+  padding: 14px 22px;
   border-radius: 12px;
   border: 1px solid var(--line);
   background: var(--accent-soft);
@@ -239,12 +222,28 @@
 
 .map-side .map-tips {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--ink-2);
+}
+
+.map-side .map-tips li {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.map-side .map-tips li:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+/* 真地图画布（高德 SDK 渲染） */
+.map-canvas {
+  height: 320px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--surface);
 }
 
 @media (max-width: 860px) {

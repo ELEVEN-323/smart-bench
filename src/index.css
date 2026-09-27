@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* 克制的暖中性色 + 单一强调色 */
   --bg: #f6f3ee;         /* 纸张暖白 */
@@ -10,15 +14,25 @@
   --accent-soft: #f3e3d8;
   --green: #47624f;      /* 安心绿（仅状态） */
   --green-soft: #e6ede6;
+  --danger: #d64541;     /* SOS 红（仅紧急态） */
+  --warm: #f5c97b;       /* 暖光（点缀） */
+  --night: #1E2A38;      /* 光伏蓝黑（深色大屏） */
+  --topbar-h: 54px; /* 顶栏高度：分屏舞台吸附与留白的唯一来源 */
   --radius: 14px;
   --shadow: 0 1px 2px rgba(46, 34, 22, 0.04), 0 12px 32px rgba(46, 34, 22, 0.07);
   --font-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'LXGW WenKai', 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-num: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -29,28 +43,44 @@ body,
 
 body {
   font-family: var(--font-sans);
-  background: var(--bg);
   color: var(--ink);
   font-size: 17px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* 全站暖光底：与首页首屏同一套「灯杆之光」，光跟着视口、不跟着页面滚 */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(780px 780px at 102% -12%, rgba(245, 201, 123, 0.4), rgba(245, 201, 123, 0) 62%),
+    radial-gradient(640px 640px at -10% 106%, rgba(185, 90, 53, 0.15), rgba(185, 90, 53, 0) 62%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* 首页分屏把光源画在每一屏自己身上，body 这层关掉，免得叠成两层光 */
+html.deck-page body {
+  background-image: none;
 }
 
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 /* ===== 顶栏：极简 + 发丝线 ===== */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 40px;
-  background: rgba(246, 243, 238, 0.9);
+  padding: 0 40px;
+  height: var(--topbar-h);
+  background: rgba(246, 243, 238, 0.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -90,6 +120,22 @@ body {
   background: var(--ink);
 }
 
+/* hover 变淡（NexusVAI / OpenAI 同款） */
+.nav:hover .nav-link {
+  opacity: 0.45;
+  color: var(--ink-3);
+}
+
+.nav .nav-link:hover {
+  opacity: 1 !important;
+  color: var(--ink) !important;
+}
+
+.nav .nav-link.active {
+  opacity: 1 !important;
+  color: #fff !important;
+}
+
 /* ===== 内容区 ===== */
 .content {
   flex: 1;
@@ -99,46 +145,89 @@ body {
   padding: 56px 32px 88px;
 }
 
-/* ===== 页脚 ===== */
+/* ===== 页脚（4 列） ===== */
 .footer {
-  text-align: center;
-  padding: 28px;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-  color: var(--ink-3);
   border-top: 1px solid var(--line);
+  background: #f1ede6;
 }
 
-.footer a {
+.footer-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding: 56px 32px 40px;
+}
+
+.footer-brand p {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: 300px;
+  line-height: 1.7;
+}
+
+.footer-col h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
   color: var(--ink-2);
   text-decoration: none;
+  padding: 5px 0;
 }
 
-.footer a:hover {
+.footer-col a:hover {
   color: var(--ink);
 }
 
-/* ===== 滚动揭示动画 ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.7s cubic-bezier(0.16, 0.8, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 0.8, 0.3, 1);
-  will-change: opacity, transform;
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 20px 32px;
+  font-size: 13px;
+  color: var(--ink-3);
 }
 
-.reveal-show {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    transition: none;
-    opacity: 1;
-    transform: none;
+@media (max-width: 720px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 40px 16px 24px;
   }
+
+  .footer-bottom {
+    padding: 16px;
+    flex-direction: column;
+  }
+}
+
+/* ===== 首页分屏（deck）开启时：内容区把宽度与留白全部交给 deck ===== */
+/* deck 自己在每一屏内做 1080px 阅读宽度 + 通栏背景，所以这里必须清零 */
+html.deck-page .content {
+  max-width: none;
+  padding: 0;
+}
+
+/* 分屏开启：页脚并入最后一屏（由 Home 渲染），App 级页脚隐藏 */
+html.deck-page .app > .footer {
+  display: none;
+}
+
+/* 分屏关闭（小屏 / 减少动效）：只保留 App 级页脚 */
+html:not(.deck-page) .deck-panel > .footer {
+  display: none;
 }
 
 /* ===== 功能页共用组件 ===== */
@@ -149,20 +238,48 @@ body {
 }
 
 .page-head {
-  margin-bottom: 28px;
+  margin-bottom: 32px;
+}
+
+/* 小标签：与首页首屏 kicker 同款（强调色 + 前导短线） */
+.page-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.page-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* 全站标题用同一套「编辑式」标题字：字号与颜色各场景自定，字重字距统一 */
+.page-head h2,
+.energy-title,
+.story-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .page-head h2 {
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-size: clamp(26px, 2.8vw, 34px);
   color: var(--ink);
 }
 
 .page-sub {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 17px;
   color: var(--ink-2);
+  line-height: 1.75;
 }
 
 .page-note {
@@ -170,6 +287,83 @@ body {
   margin-left: 12px;
   font-size: 14px;
   color: var(--ink-3);
+}
+
+/* ===== 功能页的「章节」：不套框，用发丝线 + 留白分组（首页同一套写法） ===== */
+.panel {
+  padding: 34px 0 38px;
+  border-top: 1px solid var(--line);
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 只有真正算「实体」的才保留面板质感：SOS 舞台、通话画面
+   （充电那两个只是章节容器，已经回到发丝线写法） */
+.panel.sos-stage,
+.panel.call-stage {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(46, 34, 22, 0.03), 0 18px 40px -30px rgba(46, 34, 22, 0.3);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+/* 通用主按钮（适老化） */
+.btn-primary-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary-inline:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* 次要小按钮（列表行内操作） */
+.mini-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mini-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+.mini-btn.danger {
+  color: #c2453f;
+}
+
+.mini-btn.danger:hover {
+  border-color: #c2453f;
 }
 
 /* 首页功能表整行可点击 */

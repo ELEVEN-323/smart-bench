@@ -1,33 +1,84 @@
-.assistant {
+/* ===== 语音助手（核心页） =====
+   构成：左边一个「对话台」（全页唯一的面板实体），右边一条发丝线侧栏。
+   表单、快捷问题、播报控制全部收进对话台内部，不再散落成一排孤立的按钮。 */
+
+.assistant-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 56px;
+  align-items: start;
+}
+
+/* ---------- 对话台 ---------- */
+.chat-stage {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.assistant-head h2 {
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.4px;
-  margin-bottom: 4px;
-}
-
-.assistant-sub {
-  font-size: 15px;
-  color: var(--ink-2);
-}
-
-.chat-box {
-  flex: 1;
-  min-height: 320px;
-  max-height: 55vh;
-  overflow-y: auto;
-  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 22px;
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(46, 34, 22, 0.03), 0 22px 48px -34px rgba(46, 34, 22, 0.32);
+}
+
+.chat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.chat-label {
+  font-family: var(--font-num);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.chat-tts {
+  display: flex;
+  gap: 8px;
+}
+
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tts-btn:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.tts-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 消息区：只在自己内部滚，不牵动整页 */
+.chat-box {
+  height: clamp(320px, 46vh, 520px);
+  overflow-y: auto;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  background: var(--surface);
+  overscroll-behavior: contain;
 }
 
 .msg {
@@ -39,13 +90,13 @@
 }
 
 .msg-bubble {
-  max-width: 76%;
+  max-width: 80%;
   padding: 12px 18px;
   border-radius: 14px;
-  font-size: 17px;
+  font-size: 18px;
+  line-height: 1.75;
   word-break: break-word;
   white-space: pre-wrap;
-  line-height: 1.65;
 }
 
 .msg.user .msg-bubble {
@@ -55,21 +106,22 @@
 }
 
 .msg.assistant .msg-bubble {
-  background: #f0ebe2;
+  background: #f2ede4;
   color: var(--ink);
   border-bottom-left-radius: 4px;
 }
 
-/* 打字中动画 */
+/* 打字中（克制） */
 .typing {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   align-items: center;
+  padding: 6px 4px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: #c4b9a9;
   animation: blink 1.2s infinite;
@@ -94,20 +146,30 @@
   }
 }
 
+/* ---------- 对话台底部：快捷问题 + 输入 ---------- */
+.chat-foot {
+  padding: 16px 20px 18px;
+  border-top: 1px solid var(--line);
+  background: #fbf9f4;
+}
+
 .quick-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .quick-btn {
-  padding: 10px 18px;
+  min-height: 40px;
+  padding: 8px 16px;
   font-size: 15px;
   font-weight: 500;
+  font-family: inherit;
   border: 1px solid var(--line);
+  border-radius: 999px;
   color: var(--ink-2);
   background: var(--surface);
-  border-radius: 999px;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -129,14 +191,16 @@
 
 .input {
   flex: 1;
-  padding: 14px 18px;
+  min-height: 54px;
+  padding: 12px 16px;
   font-size: 17px;
+  font-family: inherit;
   border: 1px solid var(--line);
   border-radius: 10px;
   outline: none;
   background: var(--surface);
   color: var(--ink);
-  transition: border 0.15s;
+  transition: border-color 0.15s;
 }
 
 .input:focus {
@@ -144,15 +208,19 @@
 }
 
 .send-btn {
-  padding: 14px 28px;
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 54px;
+  padding: 12px 24px;
+  font-size: 17px;
   font-weight: 600;
   color: #fff;
   background: var(--ink);
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s;
 }
 
 .send-btn:hover:not(:disabled) {
@@ -160,42 +228,90 @@
 }
 
 .send-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-.action-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+/* ---------- 右侧栏：发丝线分组 ---------- */
+.assistant-side .panel {
+  padding: 26px 0 30px;
 }
 
-.action-btn {
-  padding: 12px 22px;
-  font-size: 15px;
-  font-weight: 600;
+.assistant-tips {
+  list-style: none;
+}
+
+.assistant-tips li {
+  padding: 12px 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-2);
+  border-top: 1px solid var(--line);
+}
+
+.assistant-tips li:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.assistant-examples {
+  list-style: none;
+}
+
+.assistant-examples li {
+  border-top: 1px solid var(--line);
+}
+
+.assistant-examples li:first-child {
+  border-top: none;
+}
+
+/* 示例可以直接点，点了就发问（原来是死文本） */
+.example-btn {
+  display: block;
+  width: 100%;
+  padding: 13px 0;
   border: none;
-  border-radius: 10px;
+  background: none;
+  text-align: left;
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--ink-2);
   cursor: pointer;
-  transition: all 0.15s;
+  transition:
+    color 0.15s,
+    padding-left 0.2s;
 }
 
-.action-btn.speak {
-  background: var(--green);
-  color: #fff;
+.example-btn:hover:not(:disabled) {
+  color: var(--accent);
+  padding-left: 6px;
 }
 
-.action-btn.stop {
-  background: var(--accent);
-  color: #fff;
-}
-
-.action-btn:disabled {
-  opacity: 0.4;
+.example-btn:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .tts-hint {
-  font-size: 15px;
+  font-size: 13.5px;
   color: var(--ink-3);
+}
+
+@media (max-width: 900px) {
+  .assistant-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+    opacity: 0.5;
+  }
+
+  .example-btn {
+    transition: none;
+  }
 }

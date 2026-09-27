@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { PhoneCall, PhoneOff, User } from 'lucide-react'
 import './call.css'
 
 /**
@@ -40,7 +41,8 @@ export default function Call() {
   return (
     <div className="call">
       <div className="page-head">
-        <h2>📹 视频通话</h2>
+        <span className="page-kicker">亲情连接</span>
+        <h2>视频通话</h2>
         <p className="page-sub">
           与家人面对面，随叫随到
           <span className="page-note">（演示为模拟流程，真实通话将接入 PeerJS / WebRTC）</span>
@@ -50,40 +52,35 @@ export default function Call() {
       <div className="call-layout">
         <section className="panel call-stage">
           <div className={`call-screen ${phase === 'connected' ? 'live' : ''}`}>
-            {phase === 'idle' && (
-              <div className="call-idle">
-                <span className="call-avatar">👵</span>
-                <p className="call-hint">点击下方按钮，呼叫家人</p>
-              </div>
-            )}
-            {phase === 'calling' && (
-              <div className="call-idle">
-                <span className="call-avatar ringing">👵</span>
-                <p className="call-hint">正在呼叫家人…</p>
-              </div>
-            )}
-            {phase === 'connected' && (
-              <div className="call-idle">
-                <span className="call-avatar">👵</span>
-                <p className="call-hint">已接通 · {fmt(elapsed)}</p>
-              </div>
-            )}
+            <div className="call-idle">
+              <span className={`call-avatar ${phase === 'calling' ? 'ringing' : ''}`}>
+                <User size={72} strokeWidth={1.5} />
+              </span>
+              <p className="call-hint">
+                {phase === 'idle' && '点击下方按钮，呼叫家人'}
+                {phase === 'calling' && '正在呼叫家人…'}
+                {phase === 'connected' && `已接通 · ${fmt(elapsed)}`}
+              </p>
+            </div>
           </div>
 
           <div className="call-actions">
             {phase === 'idle' && (
               <button className="call-btn call-start" onClick={() => setPhase('calling')}>
-                📞 呼叫家人
+                <PhoneCall size={20} />
+                呼叫家人
               </button>
             )}
             {phase === 'calling' && (
               <button className="call-btn call-end" onClick={hangup}>
-                ✖ 取消呼叫
+                <PhoneOff size={20} />
+                取消呼叫
               </button>
             )}
             {phase === 'connected' && (
               <button className="call-btn call-end" onClick={hangup}>
-                ✖ 挂断
+                <PhoneOff size={20} />
+                挂断
               </button>
             )}
           </div>

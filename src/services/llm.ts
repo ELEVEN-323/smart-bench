@@ -29,7 +29,7 @@ export async function askLLM(question: string): Promise<string> {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: import.meta.env.VITE_LLM_MODEL || 'deepseek-chat',
         messages: [
           {
             role: 'system',

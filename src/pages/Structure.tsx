@@ -1,7 +1,35 @@
-import BenchArt from '../components/BenchArt'
+import ModelStage from '../components/ModelStage'
+import { Table, Descriptions } from 'antd'
 import './structure.css'
 
-/** 尺寸对比（与 docs/MODELING_GUIDE.md 第四节一致，单位 mm） */
+// —— 尺寸与结构均来自《外观建模指导》(MODELING_GUIDE.md) ——
+const STEPS = [
+  {
+    index: '01',
+    title: '坐下，更省力',
+    desc: '适老侧座面略高、略浅：430mm 提到 450mm（含坐垫），坐深 450mm 收到 420mm。',
+    points: ['座面略高，减少起身时膝关节与腰背负担', '坐深略浅，双脚踩实，起身有底'],
+  },
+  {
+    index: '02',
+    title: '起身，有处借力',
+    desc: '助起身扶手略高、加粗、带防滑纹，起坐时一扶即起。',
+    points: ['扶手顶高约 690mm，借力更顺手', '加粗握持 + 防滑纹，雨天也不打滑'],
+  },
+  {
+    index: '03',
+    title: '久坐，靠得住',
+    desc: '高靠背从 400mm 升到 500mm，撑住腰背；可拆洗坐垫厚 20–40mm。',
+    points: ['高靠背承托腰背与头颈', '可拆洗坐垫，方便清洗'],
+  },
+  {
+    index: '04',
+    title: '夜间，也安心',
+    desc: 'SOS 红色物理键、低位照明、明黄高对比边缘，看不见也摸得着。',
+    points: ['SOS 键在扶手前端，红色 + 防误触环', '低位照明 + 明黄边缘条，夜间辨位'],
+  },
+]
+
 const DIMS = [
   { item: '座面高', normal: '430', elder: '450（含坐垫）', note: '略高，起身省力' },
   { item: '坐深', normal: '450', elder: '420', note: '略浅，双脚踩实' },
@@ -20,63 +48,71 @@ const ELDER_PARTS = [
 
 export default function Structure() {
   return (
-    <div className="structure">
-      <div className="page-head">
-        <h2>🪑 座椅 3D 展示</h2>
-        <p className="page-sub">
-          360° 查看结构细节
-          <span className="page-note">（当前为线稿占位，设计组 .glb 模型到位后替换为可拖拽旋转的 3D 展示）</span>
+    <div className="structure-story">
+      <header className="story-head">
+        <span className="story-kicker">产品结构</span>
+        <h2 className="story-title">一台设备，两半不同的长椅</h2>
+        <p className="story-lede">
+          以小型路灯杆为中轴（总高 4m），左侧普通长椅、右侧老年人体工学长椅；触控屏中心高 1200mm，座面区总长 1460mm。
         </p>
-      </div>
+      </header>
 
-      <div className="structure-layout">
-        <section className="panel stage3d">
-          <div className="stage3d-canvas">
-            <BenchArt />
-            <span className="stage3d-label">360° 展示 · 占位渲染</span>
+      <div className="story">
+        <div className="story-visual">
+          <div className="story-canvas">
+            <ModelStage />
+            <span className="story-canvas-caption">360° 展示 · 拖拽旋转</span>
           </div>
-          <p className="stage3d-note">Three.js + @react-three/fiber 加载 .glb 后，支持拖拽旋转与缩放（规划中）。</p>
-        </section>
+        </div>
 
-        <aside className="structure-side">
-          <section className="panel">
-            <h3 className="panel-title">普通侧 vs 适老侧（mm）</h3>
-            <table className="dim-table">
-              <thead>
-                <tr>
-                  <th>项目</th>
-                  <th>普通侧</th>
-                  <th className="elder-col">适老侧</th>
-                </tr>
-              </thead>
-              <tbody>
-                {DIMS.map((d) => (
-                  <tr key={d.item}>
-                    <td>{d.item}</td>
-                    <td>{d.normal}</td>
-                    <td className="elder-col">
-                      <b>{d.elder}</b>
-                    </td>
-                  </tr>
+        <div className="story-copy">
+          {STEPS.map((s) => (
+            <section className="story-step" key={s.index}>
+              <span className="story-step-index">{s.index}</span>
+              <h3 className="story-step-title">{s.title}</h3>
+              <p className="story-step-desc">{s.desc}</p>
+              <ul className="story-step-points">
+                {s.points.map((p) => (
+                  <li key={p}>{p}</li>
                 ))}
-              </tbody>
-            </table>
-            <p className="dim-note">三视图、爆炸图与渲染图由设计组交付，见《外观建模指导》。</p>
-          </section>
-
-          <section className="panel">
-            <h3 className="panel-title">适老侧专属件</h3>
-            <ul className="elder-parts">
-              {ELDER_PARTS.map(([name, desc]) => (
-                <li key={name}>
-                  <b>{name}</b>
-                  <span>{desc}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </aside>
+              </ul>
+            </section>
+          ))}
+        </div>
       </div>
+
+      <section className="story-block">
+        <h3 className="story-block-title">普通侧 vs 适老侧（mm）</h3>
+        <Table
+          rowKey="item"
+          pagination={false}
+          size="middle"
+          columns={[
+            { title: '项目', dataIndex: 'item' },
+            { title: '普通侧', dataIndex: 'normal' },
+            { title: '适老侧', dataIndex: 'elderNode' },
+            { title: '设计意图', dataIndex: 'note' },
+          ]}
+          dataSource={DIMS.map((d) => ({ ...d, elderNode: <b className="elder-col">{d.elder}</b> }))}
+        />
+        <p className="table-note">
+          * 尺寸来自《外观建模指导》第四节；硬约束：杆体总高 4000、屏幕中心 1200、座面区总长 1460。
+        </p>
+      </section>
+
+      <section className="story-block">
+        <h3 className="story-block-title">适老侧专属件</h3>
+        <Descriptions
+          bordered
+          size="middle"
+          column={2}
+          items={ELDER_PARTS.map(([name, desc]) => ({
+            key: name,
+            label: name,
+            children: desc,
+          }))}
+        />
+      </section>
     </div>
   )
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Clock, AlertTriangle, PhoneCall, RotateCcw } from 'lucide-react'
+import { Steps } from 'antd'
 import { speak, stopSpeaking } from '../services/tts'
 import './sos.css'
 
@@ -43,7 +45,6 @@ export default function Sos() {
     speak('正在为您呼叫社区服务中心与您的紧急联系人，请稍候。')
   }
 
-  // 状态机推进
   useEffect(() => {
     if (phase === 'calling') {
       const t = setTimeout(() => {
@@ -61,7 +62,6 @@ export default function Sos() {
     }
   }, [phase])
 
-  // 通话计时
   useEffect(() => {
     if (phase !== 'calling' && phase !== 'connected' && phase !== 'comforting' && phase !== 'escalated') return
     const t = setInterval(() => setElapsed((e) => e + 1), 1000)
@@ -90,7 +90,8 @@ export default function Sos() {
   return (
     <div className="sos">
       <div className="page-head">
-        <h2>🆘 紧急呼叫</h2>
+        <span className="page-kicker">安全应急</span>
+        <h2>紧急呼叫</h2>
         <p className="page-sub">
           一键连接社区与家人 · 语音安抚全程陪伴
           <span className="page-note">（本页为流程模拟，真实通话将接入 WebRTC）</span>
@@ -114,22 +115,20 @@ export default function Sos() {
 
           {phase === 'calling' && (
             <button className="sos-sub-btn" onClick={escalate}>
-              ⚠️ 演示：3 秒无人接听 → 自动升级
+              <AlertTriangle size={18} />
+              演示：3 秒无人接听 → 自动升级
             </button>
           )}
           {phase === 'comforting' && (
             <button className="sos-sub-btn" onClick={end}>
-              📞 结束通话
+              <PhoneCall size={18} />
+              结束通话
             </button>
           )}
-          {phase === 'ended' && (
+          {(phase === 'ended' || phase === 'escalated') && (
             <button className="sos-sub-btn" onClick={reset}>
-              ↺ 重新演示
-            </button>
-          )}
-          {phase === 'escalated' && (
-            <button className="sos-sub-btn" onClick={reset}>
-              ↺ 重新演示
+              <RotateCcw size={18} />
+              重新演示
             </button>
           )}
         </section>
@@ -139,20 +138,24 @@ export default function Sos() {
             <h3 className="panel-title">当前状态</h3>
             <p className="sos-state-title">{PHASE_TEXT[phase].title}</p>
             <p className="sos-state-desc">{PHASE_TEXT[phase].desc}</p>
-            {elapsed > 0 && phase !== 'ended' && <p className="sos-elapsed">⏱ 本次呼叫时长 {fmt(elapsed)}</p>}
+            {elapsed > 0 && phase !== 'ended' && (
+              <p className="sos-elapsed">
+                <Clock size={16} /> 本次呼叫时长 {fmt(elapsed)}
+              </p>
+            )}
           </div>
 
           <div className="panel">
             <h3 className="panel-title">呼叫流程</h3>
-            <ol className="sos-flow">
-              {FLOW.map((s, i) => (
-                <li key={s.key} className={`sos-flow-step ${i < activeStep ? 'done' : ''} ${i === activeStep ? 'active' : ''}`}>
-                  <span className="sos-flow-dot" />
-                  <span className="sos-flow-label">{s.label}</span>
-                  {phase === 'escalated' && s.key === 'calling' && <span className="sos-flow-badge">已自动升级</span>}
-                </li>
-              ))}
-            </ol>
+            <Steps
+              orientation="vertical"
+              size="small"
+              current={activeStep}
+              items={FLOW.map((s) => ({
+                title: s.label,
+                content: phase === 'escalated' && s.key === 'calling' ? '已自动升级' : undefined,
+              }))}
+            />
           </div>
 
           <div className="panel">

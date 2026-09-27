@@ -1,19 +1,25 @@
-/* ===== 信息发布页 ===== */
+/* ===== 信息发布页 =====
+   与首页同一套写法：公告用发丝线分条，不再一条一个白框；
+   只有「标签页 / 输入框 / 开关」这类控件本身保留形状。 */
 
 .notice-tabs {
   display: flex;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
   padding: 13px 26px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink-2);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -29,57 +35,54 @@
   color: #fff;
 }
 
-/* 屏端显示 */
+/* ---- 屏端显示：一条公告一行，发丝线分隔 ---- */
 .screen-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .screen-item {
-  padding: 24px 26px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-left: 5px solid var(--accent);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--line);
 }
 
 .screen-title {
-  font-size: 24px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: var(--ink);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .screen-content {
-  font-size: 19px;
-  line-height: 1.75;
+  font-size: 17px;
+  line-height: 1.8;
   color: var(--ink-2);
+  max-width: 720px;
 }
 
 .screen-time {
   display: inline-block;
-  margin-top: 12px;
-  font-size: 14px;
+  margin-top: 14px;
+  font-family: var(--font-num);
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
   color: var(--ink-3);
 }
 
 .screen-empty {
-  padding: 40px;
+  padding: 48px 0;
   text-align: center;
-  font-size: 19px;
+  font-size: 17px;
   color: var(--ink-3);
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
+  border-top: 1px solid var(--line);
 }
 
-/* 管理端 */
+/* ---- 管理端 ---- */
 .admin-layout {
   display: grid;
   grid-template-columns: 380px 1fr;
-  gap: 22px;
+  gap: 56px;
   align-items: start;
 }
 
@@ -89,11 +92,11 @@
   width: 100%;
   margin-bottom: 14px;
   padding: 14px 16px;
-  font-size: 18px;
+  font-size: 17px;
   font-family: inherit;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fbf9f4;
+  border-radius: 10px;
+  background: var(--surface);
   color: var(--ink);
   resize: vertical;
 }
@@ -102,47 +105,60 @@
 .admin-textarea:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
-  background: var(--surface);
 }
 
 .admin-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 }
 
 .admin-item {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 18px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fbf9f4;
-}
-
-.admin-item.pub {
-  border-color: var(--green-soft);
-  background: #f4f8f3;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
 }
 
 .admin-item-main b {
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 500;
   color: var(--ink);
 }
 
 .admin-item-meta {
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--ink-3);
+}
+
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-status::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+
+.admin-status.pub {
+  color: var(--green);
+}
+
+.admin-status.pub::before {
+  background: var(--green);
 }
 
 .admin-item-content {
   margin-top: 6px;
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--ink-2);
+  max-width: 560px;
 }
 
 .admin-item-actions {
@@ -152,16 +168,9 @@
   flex: none;
 }
 
-.mini-btn.danger {
-  color: #c2453f;
-}
-
-.mini-btn.danger:hover {
-  border-color: #c2453f;
-}
-
 @media (max-width: 860px) {
   .admin-layout {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 }
