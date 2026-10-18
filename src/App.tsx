@@ -9,6 +9,7 @@ import MapPage from './pages/Map'
 import Energy from './pages/Energy'
 import Charge from './pages/Charge'
 import Notice from './pages/Notice'
+import Linkage from './pages/Linkage'
 import Privacy from './pages/Privacy'
 import Call from './pages/Call'
 import Structure from './pages/Structure'
@@ -20,6 +21,7 @@ const NAV = [
   { to: '/map', label: '位置检索' },
   { to: '/energy', label: '照明能源' },
   { to: '/notice', label: '信息发布' },
+  { to: '/linkage', label: '多杆联动' },
   { to: '/charge', label: '扫码充电' },
   { to: '/privacy', label: '隐私授权' },
   { to: '/call', label: '视频通话' },
@@ -69,6 +71,7 @@ export default function App() {
           <Route path="/map" element={<MapPage />} />
           <Route path="/energy" element={<Energy />} />
           <Route path="/notice" element={<Notice />} />
+          <Route path="/linkage" element={<Linkage />} />
           <Route path="/charge" element={<Charge />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/call" element={<Call />} />
