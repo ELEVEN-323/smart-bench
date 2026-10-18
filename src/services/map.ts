@@ -1,8 +1,9 @@
-// 位置检索服务：Mock 优先
-// 真实接入（高德 JS API 2.0）需在 index.html 引入 Loader 并配置 securityJsCode，
-// 属于后续工作；页面只依赖本接口，届时替换实现即可，页面无感。
+// 位置检索领域层：POI 类型、预置数据、检索编排（真实高德 + Mock 兜底）。
+// 高德 SDK 的具体调用统一走 services/amap.ts。
 
-export type PoiType = '医院' | '公交站' | '药店' | '银行' | '超市' | '公厕'
+import { getMapConfig, searchNearBy } from './amap'
+
+export type PoiType = '医院' | '公交站' | '药店' | '银行' | '超市' | '公厕' | '其他'
 
 export interface Poi {
   id: string
@@ -12,34 +13,13 @@ export interface Poi {
   walkMinutes: number
   address: string
   tag: string
-  /** 经纬度 [经度, 纬度]，用于高德地图落点；Mock 数据给的是默认中心附近的近似坐标 */
+  /** 高德坐标 [经度, 纬度]，用于地图落点与导航 */
   lnglat?: [number, number]
 }
 
-export interface MapConfig {
-  enabled: boolean
-  key: string
-  securityCode: string
-  center: [number, number]
-}
+export const POI_TYPES: PoiType[] = ['医院', '公交站', '药店', '银行', '超市', '公厕', '其他']
 
-/**
- * 读取高德地图配置。没填 VITE_AMAP_KEY 时 enabled=false，页面自动回退到 CSS 模拟图。
- */
-export function getMapConfig(): MapConfig {
-  const key = import.meta.env.VITE_AMAP_KEY as string | undefined
-  const securityCode = import.meta.env.VITE_AMAP_SECURITY as string | undefined
-  const centerStr: string = (import.meta.env.VITE_AMAP_CENTER as string | undefined) || '116.397428,39.90923'
-  const [lng, lat] = centerStr.split(',').map((s) => Number(s.trim()))
-  const center: [number, number] = [
-    Number.isFinite(lng) ? lng : 116.397428,
-    Number.isFinite(lat) ? lat : 39.90923,
-  ]
-  return { enabled: Boolean(key), key: key || '', securityCode: securityCode || '', center }
-}
-
-export const POI_TYPES: PoiType[] = ['医院', '公交站', '药店', '银行', '超市', '公厕']
-
+/** 首屏/兜底用的预置数据（北京中心附近示例）。 */
 const MOCK_POIS: Poi[] = [
   { id: 'p01', name: '春晖社区卫生服务中心', type: '医院', distanceM: 450, walkMinutes: 6, address: '春晖路 12 号', tag: '全科门诊 · 24 小时', lnglat: [116.3968, 39.9105] },
   { id: 'p02', name: '市第一人民医院（东院）', type: '医院', distanceM: 2100, walkMinutes: 28, address: '人民大道 88 号', tag: '三甲 · 急诊', lnglat: [116.4108, 39.9166] },
@@ -52,13 +32,26 @@ const MOCK_POIS: Poi[] = [
   { id: 'p09', name: '春晖公园公共卫生间', type: '公厕', distanceM: 350, walkMinutes: 5, address: '春晖公园南门', tag: '无障碍卫生间', lnglat: [116.3989, 39.9069] },
 ]
 
-/**
- * 检索周边设施。真实 API 未配置时自动走 Mock，保证演示永不失败。
- */
-export async function searchPOI(keyword: string, type: PoiType | '全部'): Promise<Poi[]> {
-  // 模拟真实检索的网络延迟，让交互更可信
-  await new Promise((r) => setTimeout(r, 240))
-  const kw = keyword.trim()
+function amapTypeToPoiType(typeName: string): PoiType {
+  const t = typeName || ''
+  if (t.includes('医疗') || t.includes('医院') || t.includes('诊所')) return '医院'
+  if (t.includes('药')) return '药店'
+  if (t.includes('金融') || t.includes('银行')) return '银行'
+  if (t.includes('购物') || t.includes('超市') || t.includes('便利店')) return '超市'
+  if (t.includes('交通') || t.includes('公交') || t.includes('地铁')) return '公交站'
+  if (t.includes('厕所') || t.includes('公共设施')) return '公厕'
+  return '其他'
+}
+
+export interface PoiSearchResult {
+  pois: Poi[]
+  /** 数据来源：amap = 高德真实检索，mock = 预置数据 */
+  source: 'amap' | 'mock'
+  /** 真实检索失败时的原因（source=mock 且带 error 表示已降级） */
+  error?: string
+}
+
+function filterMock(kw: string, type: PoiType | '全部'): Poi[] {
   return MOCK_POIS.filter((p) => {
     const matchType = type === '全部' || p.type === type
     const matchKw = !kw || p.name.includes(kw) || p.address.includes(kw) || p.tag.includes(kw)
@@ -66,9 +59,46 @@ export async function searchPOI(keyword: string, type: PoiType | '全部'): Prom
   })
 }
 
+/** 无关键词且「全部」时的默认检索词（助老最相关：先找医院）。 */
+const DEFAULT_QUERY = '医院'
+
 /**
- * 真实接入规划（未启用）：高德 JS API 2.0
- * - index.html 引入 <script src="https://webapi.amap.com/maps?v=2.0&key=..."></script>
- * - 使用 AMap.PlaceSearch 周边搜索，结果映射为 Poi 结构
- * - 失败时降级回本 Mock，接口不变
+ * 检索周边设施。
+ * - 配置了高德 Key：以 center 为圆心真实检索，失败自动降级 Mock（带回错误原因）。
+ * - 未配置：直接走预置数据。
  */
+export async function searchPOI(
+  keyword: string,
+  type: PoiType | '全部',
+  center?: [number, number],
+): Promise<PoiSearchResult> {
+  const cfg = getMapConfig()
+  const kw = keyword.trim()
+  const c = center || cfg.center
+  const q = kw || (type === '全部' ? DEFAULT_QUERY : type)
+
+  if (cfg.enabled) {
+    try {
+      const raw = await searchNearBy(q, c, 5000)
+      const mapped: Poi[] = raw.map((p) => {
+        const t = amapTypeToPoiType(p.type)
+        return {
+          id: p.id,
+          name: p.name,
+          type: t,
+          distanceM: p.distanceM,
+          walkMinutes: Math.max(1, Math.round(p.distanceM / 60)),
+          address: p.address,
+          tag: p.tel || p.type.split(';').pop() || '周边设施',
+          lnglat: p.lnglat,
+        }
+      })
+      return { pois: type === '全部' ? mapped : mapped.filter((p) => p.type === type), source: 'amap' }
+    } catch (err: any) {
+      console.warn('高德检索失败，降级 Mock：', err)
+      return { pois: filterMock(kw, type), source: 'mock', error: err?.message || String(err) }
+    }
+  }
+
+  return { pois: filterMock(kw, type), source: 'mock' }
+}
