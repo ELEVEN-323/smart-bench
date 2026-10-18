@@ -194,7 +194,6 @@ export default function Home() {
           </motion.div>
           <div className="hero-media">
             <ProductArt />
-            <span className="hero-media-note">产品立面示意 · 渲染图由设计组提供</span>
           </div>
         </div>
         <div className="stats">

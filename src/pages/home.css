@@ -243,8 +243,11 @@ section {
 
 .hero-media .product-art {
   position: relative;
-  height: clamp(320px, 40vw, 440px);
-  width: auto;
+  flex: none;
+  width: 118%;
+  margin-left: -9%;
+  max-width: 760px;
+  height: auto;
   filter: drop-shadow(0 20px 44px rgba(31, 27, 22, 0.13));
 }
 
@@ -406,8 +409,9 @@ section {
 }
 
 .structure-media .product-art {
-  width: 56%;
+  width: 100%;
   height: auto;
+  padding: 8% 5%;
 }
 
 .structure-list {
