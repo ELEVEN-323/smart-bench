@@ -39,6 +39,8 @@ export default function ModelStage() {
         alt="智能助老座椅 3D 模型"
         auto-rotate={!reduce}
         camera-controls
+        camera-target="-0.12 0.29 -0.12"
+        camera-orbit="30deg 75deg 1.5m"
         rotation-per-second="30deg"
         shadow-intensity="1"
         style={{ width: '100%', height: '100%' }}
