@@ -10,6 +10,13 @@ import 'lxgw-wenkai-webfont/lxgwwenkai-bold.css'
 import App from './App'
 import './index.css'
 
+// PWA：生产环境注册 Service Worker（静态资源缓存 + 离线可用）
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {})
+  })
+}
+
 // Ant Design 品牌主题：把 AntD 的设计语言对齐到我们的配色/字体
 const theme = {
   token: {
